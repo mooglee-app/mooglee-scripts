@@ -25,7 +25,7 @@ class App {
   constructor(props) {
     this.config             = props.config;
     this.dev                = process.env.NODE_ENV !== 'production';
-    this.nextApp            = next({ dev: this.dev, dir: this.config.server.clientDir });
+    this.nextApp            = next({ dev: this.dev, dir: paths.app });
     this.enableFakeApi      = envBoolean(process.env.ENABLE_FAKE_API);
     this.enableHtpasswd     = envBoolean(process.env.ENABLE_HTPASSWD);
     this.protocol           = process.env.PROTOCOL || 'http';
@@ -210,8 +210,8 @@ class App {
    */
   _initFakeApi() {
     if (this.enableFakeApi !== false && this.server !== null) {
-      this.server.get('/fake-api', germaine(path.resolve(__dirname, './database.json')));
-      this.server.get('/fake-api/*', germaine(path.resolve(__dirname, './database.json')));
+      this.server.get('/fake-api', germaine(path.resolve(paths.app, './database.json')));
+      this.server.get('/fake-api/*', germaine(path.resolve(paths.app, './database.json')));
     }
   }
 
@@ -406,6 +406,7 @@ class App {
 if (process.env.NODE_ENV === 'development') {
   process.on('unhandledRejection', err => {
     console.error(chalk.red('unhandled promise rejection error', err));
+    console.trace(err);
     return null;
   });
 }

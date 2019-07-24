@@ -7,7 +7,6 @@ const paths = require('../lib/paths');
  */
 
 module.exports = {
-  clientDir: paths.app,
   get port() { return parseInt(process.env.PORT);},
   get host() {return process.env.HOST; },
   get protocol() {return process.env.PROTOCOL;},
