@@ -3,10 +3,10 @@ import Grid             from '@material-ui/core/Grid';
 import Toolbar          from '@material-ui/core/Toolbar';
 import clx              from 'classnames';
 import React            from 'react';
-import envBoolean       from '../../../tools/envBoolean';
-import packageJson      from '../../../package';
-import componentWrapper from '../../lib/componentWrapper';
-import LangSwitch       from '../utils/LangSwitch';
+import envBoolean       from '../tools/envBoolean';
+import packageJson      from '../../package';
+import componentWrapper from '../helpers/componentWrapper';
+import LangSwitch       from './LangSwitch';
 import Link             from './Link';
 
 

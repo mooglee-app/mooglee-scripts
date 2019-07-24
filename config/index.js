@@ -1,22 +1,17 @@
-const env     = process.env.NODE_ENV;
-let envConfig = null;
+const paths     = require('../lib/paths');
+const deepMerge = require('deepmerge');
 
+const appConfig = require(paths.appConfig);
 
-try {
-  envConfig = require(`./env/${env}.config`);
-} catch (err) {
-  envConfig = {};
-}
 
 // Build the final config object
-const masteredConfig = Object.assign({
+const masteredConfig = deepMerge({
     server: require('./server.config'),
-    api: require('./api.config'),
-    lang: require('./lang.config'),
-    seo: require('./seo.config'),
-    redux: require('./redux.config'),
+    env: require('./env.config'),
+  serviceWorker : require('./serviceWorker.config')
   },
-  envConfig,
+  appConfig,
 );
+
 
 module.exports = masteredConfig;

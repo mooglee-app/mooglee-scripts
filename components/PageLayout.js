@@ -3,11 +3,13 @@ import { withStyles } from '@material-ui/core/styles';
 import PropTypes      from 'prop-types';
 import React          from 'react';
 import Inspector      from 'react-inspector';
-import config         from '../../../config';
-import Error          from '../../pages/_error';
+import config         from '../config';
+import paths          from '../lib/paths';
 import Head           from './Head';
 import Header         from './Header';
 
+
+const Error = require(paths.appErrorPage);
 
 const styles = theme => ({
 
@@ -69,7 +71,7 @@ const PageLayout = withStyles(styles)(function Layout(props) {
   Object.assign(pageData || {}, rest);
 
   return (
-    <div className={`${ classes.root } page-${pageData.title}`} style={backgroundColor ? { backgroundColor } : {}}>
+    <div className={`${classes.root} page-${pageData.title}`} style={backgroundColor ? { backgroundColor } : {}}>
       <Head {...pageData}/>
       <Header/>
       <Container className={classes.container} fixed>

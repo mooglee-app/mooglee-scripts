@@ -1,1 +1,0 @@
-This is a Work In Progress component. It will be released in a next update

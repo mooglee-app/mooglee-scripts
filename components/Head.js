@@ -1,6 +1,6 @@
 import Head   from 'next/head';
 import React  from 'react';
-import config from '../../../config/index';
+import config from '../config';
 
 
 /**
@@ -13,7 +13,7 @@ export default React.memo((props) => {
 
   metaData = [...config.seo.defaultMetaTags, ...(metaData || [])];
 
-  const title = props.title || config.seo.defaultPagesTitle || require('../../../package').name;
+  const title = props.title || config.seo.defaultPagesTitle || require('../../package').name;
 
   return (
     <Head>
@@ -32,7 +32,7 @@ export default React.memo((props) => {
       }
       {
         process.env.NODE_ENV !== 'development' &&
-        <link rel="manifest" href="/manifest.json" />
+        <link rel="manifest" href="/manifest.json"/>
       }
     </Head>
   );

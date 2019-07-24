@@ -1,4 +1,5 @@
 const url = require('url');
+const paths = require('../lib/paths');
 
 /**
  * The server config
@@ -6,7 +7,7 @@ const url = require('url');
  */
 
 module.exports = {
-  clientDir: './client',
+  clientDir: paths.app,
   get port() { return parseInt(process.env.PORT);},
   get host() {return process.env.HOST; },
   get protocol() {return process.env.PROTOCOL;},

@@ -2,12 +2,13 @@ import Typography           from '@material-ui/core/Typography';
 import classNames           from 'classnames';
 import propTypes            from 'prop-types';
 import React                from 'react';
-import config               from '../../../config/index';
-import removeUrlLastSlash   from '../../../tools/removeUrlLastSlash';
-import { Link as NextLink } from '../../../server/lib/i18n';
-import routes               from '../../../server/routes';
-import wrapper              from '../../lib/componentWrapper';
+import config               from '../config';
+import removeUrlLastSlash   from '../tools/removeUrlLastSlash';
+import { Link as NextLink } from '../lib/i18n';
+import wrapper              from '../helpers/componentWrapper';
+import paths from '../lib/paths';
 
+const routes = require(paths.routes);
 
 
 /**

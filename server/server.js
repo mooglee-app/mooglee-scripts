@@ -4,7 +4,7 @@ const compression           = require('compression');
 const cors                  = require('cors');
 const { parse }             = require('url');
 const checkRequiredFiles    = require('react-dev-utils/checkRequiredFiles');
-const paths                 = require('./lib/paths');
+const paths                 = require('../lib/paths');
 const { choosePort }        = require('react-dev-utils/WebpackDevServerUtils');
 const auth                  = require('basic-auth');
 const path                  = require('path');
@@ -13,11 +13,10 @@ const removeUrlLastSlash    = require('../tools/removeUrlLastSlash');
 const chalk                 = require('chalk');
 const envBoolean            = require('../tools/envBoolean');
 const nextI18NextMiddleware = require('next-i18next/middleware').default;
-const nextI18next           = require('./lib/i18n');
-
+const nextI18next           = require('../lib/i18n');
 
 const config   = require('../config');
-const routes   = require('./routes');
+const routes   = require(paths.routes);
 const germaine = require('germaine');
 
 
@@ -177,10 +176,8 @@ class App {
    */
   checkRequiredFiles() {
     if (!checkRequiredFiles([
-      paths.appServer,
       paths.appPublic,
-      paths.appClient,
-      paths.appClientPages,
+      paths.appPages,
       paths.appNodeModules,
       paths.appLocales,
       paths.appConfig,

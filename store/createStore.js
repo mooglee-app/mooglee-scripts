@@ -1,24 +1,28 @@
+import deepmerge                        from 'deepmerge';
 import { applyMiddleware, createStore } from 'redux';
 import { load, save }                   from 'redux-localstorage-simple';
 import { createLogger }                 from 'redux-logger';
 import thunk                            from 'redux-thunk';
 import config                           from '../config';
-import Socket                           from '../client/lib/socket';
-import routes                           from '../server/routes';
-import reducers                         from './reducers/index';
-import packageJson from '../package.json'
-import deepmerge from 'deepmerge';
+import paths                            from '../lib/paths';
+
+
+const packageJson = require(paths.appPackageJson);
+const Socket      = require(paths.socket);
+const routes      = require(paths.routes);
+const reducers    = require(paths.appStoreReducers);
+const defaultStore = require(paths.appDefaultStore)
 
 // Items that be stored in the localStorage
 const { localStorageStates } = config.redux;
 
 const isServer = !process.browser;
 const logger   = process.env.NODE_ENV === 'production'
-? _store => _next => _action => _next(_action)
+  ? _store => _next => _action => _next(_action)
   : createLogger({
-  collapsed: true,
-  duration: true,
-})
+    collapsed: true,
+    duration: true,
+  });
 
 // The socket will be used in thunk actions to simplify the connection
 // with an external API. You can learn more about how it works in the readme
@@ -35,6 +39,7 @@ const DEFAULT_STATE = {
     lang: config.lang.default,
     routes,
   },
+  ...defaultStore
 };
 
 
@@ -55,7 +60,7 @@ export default (initialState = DEFAULT_STATE) => {
       applyMiddleware(
         save({ states: localStorageStates, namespace: packageJson.name }),
         thunk.withExtraArgument(socket),
-        logger
+        logger,
       ),
     );
   }

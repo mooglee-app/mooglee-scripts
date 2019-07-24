@@ -5,22 +5,20 @@ import Select                from '@material-ui/core/Select';
 import classNames            from 'classnames';
 import React                 from 'react';
 import { connect }           from 'react-redux';
-import config                from '../../../config/index';
-import { i18n }              from '../../../server/lib/i18n';
-import { updateAppLanguage } from '../../../store/actions/app.actions';
-
+import config                from '../config';
+import { i18n }              from '../lib/i18n';
 
 /**
  * This component displays a button to switch the current language
  * It can resolve a given url to any other language at the condition that
  * this url is not dynamic.
  */
-const LangSwitch = (({ lang, routes, classes = {}, dispatch }) => {
+const LangSwitch = (({ lang, classes = {}, callback }) => {
   if (config.lang.enabled !== true) return null;
 
   const onChange = ({ target }) => {
     i18n.changeLanguage(target.value, () => {
-      dispatch(updateAppLanguage(target.value));
+      callback(target.value) // TODO the store dispatch should be made outside of this component
     });
   };
 
