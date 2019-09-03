@@ -9,7 +9,7 @@ import Head           from './Head';
 import Header         from './Header';
 
 
-const Error = require(paths.appErrorPage);
+const Error = require(`${paths.appErrorPage}`);
 
 const styles = theme => ({
 

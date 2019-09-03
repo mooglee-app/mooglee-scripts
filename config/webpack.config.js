@@ -5,6 +5,7 @@ const env                  = getClientEnvironment(config.server.getUrl());
 const Visualizer           = require('webpack-visualizer-plugin');
 const path                 = require('path');
 const envBoolean           = require('../tools/envBoolean');
+const paths = require('../lib/paths')
 
 /**
  * This is not a real webpack configuration file but a function that performs changes to
@@ -36,7 +37,7 @@ module.exports = (nextWebpackConfig, { isServer, buildId, distDir, dev }) => {
   // Ask babel to compile all route files instead of just "client"
   nextWebpackConfig.module.rules.forEach(r => {
     if (r.use && r.use.loader === 'next-babel-loader') {
-      r.include = [path.resolve(__dirname + '/..')];
+      r.include = [/*path.resolve(__dirname + '/..')*/ paths.app];
     }
   });
 

@@ -16,16 +16,15 @@ const nextI18NextMiddleware = require('next-i18next/middleware').default;
 const nextI18next           = require('../lib/i18n');
 
 const config   = require('../config');
-const routes   = require(paths.routes);
+const routes   = require(`${paths.routes}`);
 const germaine = require('germaine');
-
-
+const nextConfig = require('../next.config')
 
 class App {
   constructor(props) {
     this.config             = props.config;
     this.dev                = process.env.NODE_ENV !== 'production';
-    this.nextApp            = next({ dev: this.dev, dir: paths.app });
+    this.nextApp            = next({ dev: this.dev, dir: paths.app, conf: nextConfig });
     this.enableFakeApi      = envBoolean(process.env.ENABLE_FAKE_API);
     this.enableHtpasswd     = envBoolean(process.env.ENABLE_HTPASSWD);
     this.protocol           = process.env.PROTOCOL || 'http';
@@ -116,11 +115,13 @@ class App {
 
     this.checkRequiredFiles();
 
+    console.log('before')
     try {
       await this.nextApp.prepare();
     } catch (err) {
       throw err;
     }
+    console.log('go')
 
     // Init server
     this.server = express();
@@ -148,7 +149,6 @@ class App {
       this.server.use(nextI18NextMiddleware(nextI18next));
       this.server.use('/locales', express.static(path.join(__dirname, '../', this.config.lang.localesPath)));
     }
-
 
     // Here we are adding new server listeners for the custom routes of the application. We are making this
     // differently depending on if the route translation has been enable or not

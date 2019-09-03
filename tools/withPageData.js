@@ -1,5 +1,8 @@
-import React         from 'react';
-import { fetchPage } from '../../store/actions/pages.actions';
+import React from 'react';
+import paths from '../lib/paths';
+
+
+const fetchPage = require(`${paths.appStoreActions}/pages.actions.js`).fetchPage;
 
 
 function getErrorStatus(error = {}) {

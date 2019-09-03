@@ -8,7 +8,7 @@ import { Link as NextLink } from '../lib/i18n';
 import wrapper              from '../helpers/componentWrapper';
 import paths from '../lib/paths';
 
-const routes = require(paths.routes);
+const routes = require(`${paths.routes}`);
 
 
 /**

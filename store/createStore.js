@@ -1,17 +1,15 @@
 import deepmerge                        from 'deepmerge';
 import { applyMiddleware, createStore } from 'redux';
-import { load, save }                   from 'redux-localstorage-simple';
 import { createLogger }                 from 'redux-logger';
 import thunk                            from 'redux-thunk';
 import config                           from '../config';
 import paths                            from '../lib/paths';
 
-
-const packageJson = require(paths.appPackageJson);
-const Socket      = require(paths.socket);
-const routes      = require(paths.routes);
-const reducers    = require(paths.appStoreReducers);
-const defaultStore = require(paths.appDefaultStore)
+const packageJson  = require(`${paths.appPackageJson}`);
+const Socket       = require(`${paths.socket}`);
+const routes       = require(`${paths.routes}`);
+const reducers     = require(`${paths.appStoreReducers}`);
+const defaultStore = require(`${paths.appDefaultStore}`);
 
 // Items that be stored in the localStorage
 const { localStorageStates } = config.redux;
@@ -39,11 +37,14 @@ const DEFAULT_STATE = {
     lang: config.lang.default,
     routes,
   },
-  ...defaultStore
+  ...defaultStore,
 };
 
 
-export default (initialState = DEFAULT_STATE) => {
+export default (initialState = DEFAULT_STATE, storageHandler) => {
+
+  const { load, save } = storageHandler;
+
   // We do not want middlewares like redux-logger to get
   // fired on the server side
 

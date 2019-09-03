@@ -1,7 +1,7 @@
 const paths     = require('../lib/paths');
 const deepMerge = require('deepmerge');
 
-const appConfig = require(paths.appConfig);
+const appConfig = require(`${paths.appConfig}`);
 
 
 // Build the final config object
