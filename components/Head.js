@@ -1,6 +1,9 @@
 import Head   from 'next/head';
 import React  from 'react';
 import config from '../config';
+import paths  from '../lib/paths';
+
+const packageJson = require(`${paths.appPackageJson}`);
 
 
 /**
@@ -13,7 +16,7 @@ export default React.memo((props) => {
 
   metaData = [...config.seo.defaultMetaTags, ...(metaData || [])];
 
-  const title = props.title || config.seo.defaultPagesTitle || require('../../package').name;
+  const title = props.title || config.seo.defaultPagesTitle || packageJson.name;
 
   return (
     <Head>

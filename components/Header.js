@@ -4,11 +4,12 @@ import Toolbar          from '@material-ui/core/Toolbar';
 import clx              from 'classnames';
 import React            from 'react';
 import envBoolean       from '../tools/envBoolean';
-import packageJson      from '../../package';
+import paths from '../lib/paths'
 import componentWrapper from '../helpers/componentWrapper';
 import LangSwitch       from './LangSwitch';
 import Link             from './Link';
 
+const packageJson = require(`${paths.appPackageJson}`);
 
 const styles = theme => ({
 
