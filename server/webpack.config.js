@@ -1,11 +1,11 @@
-const getClientEnvironment = require('../lib/env');
+const getClientEnvironment = require('./env');
 const webpack              = require('webpack');
-const config               = require('./index');
+const config               = require('../config');
 const env                  = getClientEnvironment(config.server.getUrl());
 const Visualizer           = require('webpack-visualizer-plugin');
 const path                 = require('path');
-const envBoolean           = require('../tools/envBoolean');
-const paths                = require('../lib/paths');
+const envBoolean           = require('../src/tools/envBoolean');
+const paths                = require('../src/lib/paths');
 
 /**
  * This is not a real webpack configuration file but a function that performs changes to

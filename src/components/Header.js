@@ -4,7 +4,7 @@ import Toolbar          from '@material-ui/core/Toolbar';
 import clx              from 'classnames';
 import React            from 'react';
 import envBoolean       from '../tools/envBoolean';
-import paths from '../lib/paths'
+import paths            from '../lib/paths'
 import componentWrapper from '../helpers/componentWrapper';
 import LangSwitch       from './LangSwitch';
 import Link             from './Link';

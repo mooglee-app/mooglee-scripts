@@ -1,5 +1,5 @@
 const withSass      = require('@zeit/next-sass');
-const webpackConfig = require('./config/webpack.config');
+const webpackConfig = require('./server/webpack.config');
 const withOffline   = require('next-offline');
 const workboxOpts   = require('./config').serviceWorker;
 

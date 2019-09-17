@@ -3,7 +3,7 @@ import withMUITheme                               from '@material-ui/styles/with
 import React                                      from 'react';
 import { connect }                                from 'react-redux';
 import { compose }                                from 'recompose';
-import config                                     from '../config';
+import config                                     from '../../config';
 import { getInitialProps, I18n, withTranslation } from '../lib/i18n';
 import withPageData                               from '../tools/withPageData';
 

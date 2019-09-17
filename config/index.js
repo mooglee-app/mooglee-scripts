@@ -1,4 +1,4 @@
-const paths     = require('../lib/paths');
+const paths     = require('../src/lib/paths');
 const deepMerge = require('deepmerge');
 
 const appConfig = require(`${paths.appConfig}`);
@@ -8,7 +8,6 @@ const appConfig = require(`${paths.appConfig}`);
 const masteredConfig = deepMerge({
     server: require('./server.config'),
     env: require('./env.config'),
-  serviceWorker : require('./serviceWorker.config')
   },
   appConfig,
 );

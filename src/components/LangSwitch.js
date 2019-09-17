@@ -1,12 +1,12 @@
-import Avatar                from '@material-ui/core/Avatar';
-import Hidden                from '@material-ui/core/Hidden';
-import MenuItem              from '@material-ui/core/MenuItem';
-import Select                from '@material-ui/core/Select';
-import classNames            from 'classnames';
-import React                 from 'react';
-import { connect }           from 'react-redux';
-import config                from '../config';
-import { i18n }              from '../lib/i18n';
+import Avatar      from '@material-ui/core/Avatar';
+import Hidden      from '@material-ui/core/Hidden';
+import MenuItem    from '@material-ui/core/MenuItem';
+import Select      from '@material-ui/core/Select';
+import classNames  from 'classnames';
+import React       from 'react';
+import { connect } from 'react-redux';
+import config      from '../../config';
+import { i18n }    from '../lib/i18n';
 
 /**
  * This component displays a button to switch the current language

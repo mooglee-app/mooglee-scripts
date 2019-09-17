@@ -1,5 +1,4 @@
 const url = require('url');
-const paths = require('../lib/paths');
 
 /**
  * The server config

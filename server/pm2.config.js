@@ -2,9 +2,10 @@
  *  PM2 settings (for production and staging)
  *  @see http://pm2.keymetrics.io/docs/usage/application-declaration/
  **/
+const paths = require('../src/lib/paths')
 
 module.exports = {
-  name: require('../package').name,
+  name: require(paths.appPackageJson).name,
   get max_memory_restart() { return `${process.env.WEB_MEMORY || 512}M`; },
   get instances() { return process.env.WEB_CONCURRENCY || -1; },
   exec_mode: 'cluster',
