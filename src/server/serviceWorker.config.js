@@ -1,4 +1,4 @@
-const paths = require('../src/lib/paths');
+const paths = require('../lib/paths');
 
 /**
  * Service Worker Configuration

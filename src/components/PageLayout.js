@@ -3,7 +3,7 @@ import { withStyles } from '@material-ui/core/styles';
 import PropTypes      from 'prop-types';
 import React          from 'react';
 import Inspector      from 'react-inspector';
-import config         from '../../config';
+import config         from '../config';
 import paths          from '../lib/paths';
 import Head           from './Head';
 import Header         from './Header';

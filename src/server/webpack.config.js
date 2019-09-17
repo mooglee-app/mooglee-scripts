@@ -4,8 +4,8 @@ const config               = require('../config');
 const env                  = getClientEnvironment(config.server.getUrl());
 const Visualizer           = require('webpack-visualizer-plugin');
 const path                 = require('path');
-const envBoolean           = require('../src/tools/envBoolean');
-const paths                = require('../src/lib/paths');
+const envBoolean           = require('../tools/envBoolean');
+const paths                = require('../lib/paths');
 
 /**
  * This is not a real webpack configuration file but a function that performs changes to
@@ -34,14 +34,12 @@ module.exports = (nextWebpackConfig, { isServer, buildId, distDir, dev }) => {
     });
   }
 
-  // Ask babel to compile all route files instead of just "client"
-  // nextWebpackConfig.module.rules.forEach(r => {
-  //   if (r.use && r.use.loader === 'next-babel-loader') {
-  //     console.log(r);
-  //     r.include = [paths.app];
-  //   }
-  //   console.log(r);
-  // });
+  //Ask babel to compile all route files instead of just "client"
+  nextWebpackConfig.module.rules.forEach(r => {
+    if (r.use && r.use.loader === 'next-babel-loader') {
+      r.include = [...r.include, paths.app];
+    }
+  });
 
 
   nextWebpackConfig.plugins = nextWebpackConfig.plugins.map(plugin => {
@@ -69,17 +67,6 @@ module.exports = (nextWebpackConfig, { isServer, buildId, distDir, dev }) => {
           test: /\.css$/,
           use: ['style-loader', 'css-loader', 'postcss-loader'],
         },
-        // {
-        //   test: /\.js$/,
-        //   include: /node_modules\/@mooglee\/core/,
-        //   use: {
-        //     loader: 'babel-loader',
-        //     options: {
-        //       presets: ['@babel/preset-env'],
-        //       plugins: ['@babel/plugin-syntax-dynamic-import'],
-        //     },
-        //   },
-        // }
       ],
     },
     plugins: [

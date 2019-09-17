@@ -2,7 +2,7 @@
  *  PM2 settings (for production and staging)
  *  @see http://pm2.keymetrics.io/docs/usage/application-declaration/
  **/
-const paths = require('../src/lib/paths')
+const paths = require('../lib/paths')
 
 module.exports = {
   name: require(paths.appPackageJson).name,

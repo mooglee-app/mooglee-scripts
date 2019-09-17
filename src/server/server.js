@@ -4,21 +4,23 @@ const compression           = require('compression');
 const cors                  = require('cors');
 const { parse }             = require('url');
 const checkRequiredFiles    = require('react-dev-utils/checkRequiredFiles');
-const paths                 = require('../src/lib/paths');
+const paths                 = require('../lib/paths');
 const { choosePort }        = require('react-dev-utils/WebpackDevServerUtils');
 const auth                  = require('basic-auth');
 const path                  = require('path');
 const LRUCache              = require('lru-cache');
-const removeUrlLastSlash    = require('../src/tools/removeUrlLastSlash');
+const removeUrlLastSlash    = require('../tools/removeUrlLastSlash');
 const chalk                 = require('chalk');
-const envBoolean            = require('../src/tools/envBoolean');
+const envBoolean            = require('../tools/envBoolean');
 const nextI18NextMiddleware = require('next-i18next/middleware').default;
-const nextI18next           = require('../src/lib/i18n');
+const nextI18next           = require('../lib/i18n');
 
-const config   = require('../config');
-const routes   = require(`${paths.routes}`);
-const germaine = require('germaine');
-const nextConfig = require('../next.config')
+const config     = require('../config');
+const routes     = require(`${paths.routes}`);
+const germaine   = require('germaine');
+const nextConfig = require('../next.config');
+
+
 
 class App {
   constructor(props) {
@@ -115,13 +117,11 @@ class App {
 
     this.checkRequiredFiles();
 
-    console.log('before')
     try {
       await this.nextApp.prepare();
     } catch (err) {
       throw err;
     }
-    console.log('go')
 
     // Init server
     this.server = express();

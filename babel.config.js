@@ -11,7 +11,7 @@ module.exports = {
     'babel-plugin-transform-dev-warning',
     'babel-plugin-optimize-clsx',
     '@babel/plugin-transform-object-assign',
-    ['@babel/plugin-transform-runtime', { useESModules: true }],
+    ['@babel/plugin-transform-runtime', { useESModules: false }],
     ['@babel/plugin-proposal-class-properties', { loose: true }],
     ['@babel/plugin-proposal-object-rest-spread', { loose: true }],
   ],

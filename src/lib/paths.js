@@ -1,16 +1,6 @@
-let appDirectory;
-let resolveApp;
+const appDirectory = '../../../../';
+const resolveApp   = relativePath => (appDirectory  + (relativePath === '.' ? '' : relativePath));
 
-try {
-  const fs   = require('fs');
-  const path = require('path');
-
-  appDirectory = fs.realpathSync(process.cwd());
-  resolveApp   = relativePath => path.resolve(appDirectory, relativePath);
-} catch (err) {
-  appDirectory = process.env.PWD;
-  resolveApp   = relativePath => (appDirectory + '/' + (relativePath === '.' ? '' : relativePath));
-}
 
 const envPublicUrl = process.env.PUBLIC_URL;
 

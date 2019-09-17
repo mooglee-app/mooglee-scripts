@@ -2,7 +2,7 @@ import Typography           from '@material-ui/core/Typography';
 import classNames           from 'classnames';
 import propTypes            from 'prop-types';
 import React                from 'react';
-import config               from '../../config';
+import config               from '../config';
 import removeUrlLastSlash   from '../tools/removeUrlLastSlash';
 import { Link as NextLink } from '../lib/i18n';
 import wrapper              from '../helpers/componentWrapper';

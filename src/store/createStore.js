@@ -2,7 +2,7 @@ import deepmerge                        from 'deepmerge';
 import { applyMiddleware, createStore } from 'redux';
 import { createLogger }                 from 'redux-logger';
 import thunk                            from 'redux-thunk';
-import config                           from '../../config';
+import config                           from '../config';
 import paths                            from '../lib/paths';
 
 const packageJson  = require(`${paths.appPackageJson}`);

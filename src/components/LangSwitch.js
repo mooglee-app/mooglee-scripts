@@ -5,7 +5,7 @@ import Select      from '@material-ui/core/Select';
 import classNames  from 'classnames';
 import React       from 'react';
 import { connect } from 'react-redux';
-import config      from '../../config';
+import config      from '../config';
 import { i18n }    from '../lib/i18n';
 
 /**

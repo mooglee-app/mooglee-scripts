@@ -1,4 +1,4 @@
-const config      = require('../../config');
+const config      = require('../config');
 const NextI18Next = require('next-i18next').default;
 
 module.exports = config.lang.enabled
