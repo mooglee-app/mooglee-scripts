@@ -14,7 +14,7 @@ module.exports = {
   appStatic: resolveApp('static'),
   appPackageJson: resolveApp('package.json'),
   appPages: resolveApp('pages'),
-  appErrorPage: resolveApp('pages/_error'),
+  appErrorPage: resolveApp('pages/_error.js'),
   appStoreReducers: resolveApp('store/reducers'),
   appDefaultStore: resolveApp('store/defaultStore.js'),
   testsSetup: resolveApp('config/jest.setup.js'),
