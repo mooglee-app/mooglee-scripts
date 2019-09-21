@@ -8,6 +8,7 @@ import Socket                           from '../../../../socket';
 import defaultStore                     from '../../../../store/defaultStore';
 import reducers                         from '../../../../store/reducers';
 import config                           from '../config';
+import { load, save } from 'redux-localstorage-simple'
 
 // Items that be stored in the localStorage
 const { localStorageStates } = config.redux;
@@ -39,9 +40,7 @@ const DEFAULT_STATE = {
 };
 
 
-export default (initialState = DEFAULT_STATE, storageHandler) => {
-
-  const { load, save } = storageHandler;
+export default (initialState = DEFAULT_STATE) => {
 
   // We do not want middlewares like redux-logger to get
   // fired on the server side
