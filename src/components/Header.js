@@ -9,7 +9,7 @@ import componentWrapper from '../helpers/componentWrapper';
 import LangSwitch       from './LangSwitch';
 import Link             from './Link';
 
-const packageJson = require(`${paths.appPackageJson}`);
+const packageJson = require('../../../../package');
 
 const styles = theme => ({
 

@@ -16,7 +16,7 @@ const nextI18NextMiddleware = require('next-i18next/middleware').default;
 const nextI18next           = require('../lib/i18n');
 
 const config     = require('../config');
-const routes     = require(`${paths.routes}`);
+const routes     = require('../../../../routes');
 const germaine   = require('germaine');
 const nextConfig = require('../next.config');
 

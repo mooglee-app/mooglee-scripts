@@ -6,9 +6,7 @@ import config               from '../config';
 import removeUrlLastSlash   from '../tools/removeUrlLastSlash';
 import { Link as NextLink } from '../lib/i18n';
 import wrapper              from '../helpers/componentWrapper';
-import paths                from '../lib/paths';
-
-const routes = require(`${paths.routes}`);
+import routes from '../../../../routes'
 
 
 /**

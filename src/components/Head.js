@@ -1,9 +1,8 @@
 import Head   from 'next/head';
 import React  from 'react';
 import config from '../config';
-import paths  from '../lib/paths';
 
-const packageJson = require(`${paths.appPackageJson}`);
+const packageJson = require('../../../../package');
 
 
 /**

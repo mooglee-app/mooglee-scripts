@@ -1,4 +1,4 @@
-const appDirectory = '../../../../';
+const appDirectory = process.env.PWD + '/';
 const resolveApp   = relativePath => (appDirectory  + (relativePath === '.' ? '' : relativePath));
 
 

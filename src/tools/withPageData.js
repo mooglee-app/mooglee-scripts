@@ -2,7 +2,7 @@ import React from 'react';
 import paths from '../lib/paths';
 
 
-const fetchPage = require(`${paths.appStoreActions}/pages.actions.js`).fetchPage;
+const fetchPage = require(`../../../../store/actions/pages.actions.js`).fetchPage;
 
 
 function getErrorStatus(error = {}) {

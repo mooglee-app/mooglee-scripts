@@ -1,3 +1,1 @@
-const paths     = require('../lib/paths');
-
-module.exports = require(`${paths.appConfig}`);
+module.exports = require('../../../../config');

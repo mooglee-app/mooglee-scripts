@@ -2,14 +2,12 @@ import deepmerge                        from 'deepmerge';
 import { applyMiddleware, createStore } from 'redux';
 import { createLogger }                 from 'redux-logger';
 import thunk                            from 'redux-thunk';
+import packageJson                      from '../../../../package';
+import routes                           from '../../../../routes';
+import Socket                           from '../../../../socket';
+import defaultStore                     from '../../../../store/defaultStore';
+import reducers                         from '../../../../store/reducers';
 import config                           from '../config';
-import paths                            from '../lib/paths';
-
-const packageJson  = require(`${paths.appPackageJson}`);
-const Socket       = require(`${paths.socket}`);
-const routes       = require(`${paths.routes}`);
-const reducers     = require(`${paths.appStoreReducers}`);
-const defaultStore = require(`${paths.appDefaultStore}`);
 
 // Items that be stored in the localStorage
 const { localStorageStates } = config.redux;
