@@ -1,13 +1,13 @@
 {
   "name": "@mooglee/core",
-  "version": "0.1.2",
+  "version": "0.1.10",
   "description": "",
   "main": "/src/index.js",
   "_appRelativePath": "../../../",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "publish": "npm publish build --scope=@mooglee",
-    "build": "node_modules/@babel/cli/bin/babel.js --config-file ./babel.config.js ./src --out-dir ./build && npm run build:copy-files",
+    "build": "npm run prebuild && node_modules/@babel/cli/bin/babel.js --config-file ./babel.config.js ./src --out-dir ./build && npm run build:copy-files",
     "build:copy-files": "node ./scripts/copy-files.js",
     "prebuild": "rimraf build"
   },

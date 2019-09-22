@@ -2,12 +2,13 @@ import Typography           from '@material-ui/core/Typography';
 import classNames           from 'classnames';
 import propTypes            from 'prop-types';
 import React                from 'react';
+import getAppExports            from '../appExports';
 import config               from '../config';
-import removeUrlLastSlash   from '../tools/removeUrlLastSlash';
-import { Link as NextLink } from '../lib/i18n';
 import wrapper              from '../helpers/componentWrapper';
-import routes from '../../../../routes'
+import { Link as NextLink } from '../lib/i18n';
+import removeUrlLastSlash   from '../tools/removeUrlLastSlash';
 
+const {routes} = getAppExports();
 
 /**
  * This component can be used to build links that works properly with NextJs
@@ -130,7 +131,7 @@ class Link extends React.Component {
     // if not, only show an error log on dev env
     if (typeof to !== 'string') {
       if (process.env.NODE_ENV !== 'production') {
-        console.error(`Link.js: No matching route has been found for '${ to }'`);
+        console.error(`Link.js: No matching route has been found for '${to}'`);
       }
     }
 
@@ -229,7 +230,7 @@ class Link extends React.Component {
           noTypo === true
             ? this.props.children
             :
-            <Typography className={`${ className }`} style={style} variant={variant} component={component} color={color}>
+            <Typography className={`${className}`} style={style} variant={variant} component={component} color={color}>
               {children}
             </Typography>
         }

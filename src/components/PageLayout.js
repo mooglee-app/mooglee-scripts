@@ -3,12 +3,13 @@ import { withStyles } from '@material-ui/core/styles';
 import PropTypes      from 'prop-types';
 import React          from 'react';
 import Inspector      from 'react-inspector';
+import getAppExports  from '../appExports';
 import config         from '../config';
 import Head           from './Head';
 import Header         from './Header';
 
 
-const Error = require('../../../../pages/_error');
+const Error = getAppExports().errorPage;
 
 const styles = theme => ({
 

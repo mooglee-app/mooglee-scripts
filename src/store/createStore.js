@@ -1,17 +1,16 @@
 import deepmerge                        from 'deepmerge';
 import { applyMiddleware, createStore } from 'redux';
+import { load, save }                   from 'redux-localstorage-simple';
 import { createLogger }                 from 'redux-logger';
 import thunk                            from 'redux-thunk';
-import packageJson                      from '../../../../package';
-import routes                           from '../../../../routes';
-import Socket                           from '../../../../socket';
-import defaultStore                     from '../../../../store/defaultStore';
-import reducers                         from '../../../../store/reducers';
+import getAppExports                    from '../appExports';
 import config                           from '../config';
-import { load, save } from 'redux-localstorage-simple'
+import Socket                           from '../lib/socket';
 
 // Items that be stored in the localStorage
 const { localStorageStates } = config.redux;
+
+const { defaultStore, packageJson, reducers, routes } = getAppExports();
 
 const isServer = !process.browser;
 const logger   = process.env.NODE_ENV === 'production'

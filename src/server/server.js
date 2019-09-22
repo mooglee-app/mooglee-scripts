@@ -14,13 +14,12 @@ const chalk                 = require('chalk');
 const envBoolean            = require('../tools/envBoolean');
 const nextI18NextMiddleware = require('next-i18next/middleware').default;
 const nextI18next           = require('../lib/i18n');
+const getAppExports = require('../appExports');
 
 const config     = require('../config');
-const routes     = require('../../../../routes');
 const germaine   = require('germaine');
 const nextConfig = require('../next.config');
-
-
+const routes = getAppExports(true).routes;
 
 class App {
   constructor(props) {
@@ -177,17 +176,22 @@ class App {
   checkRequiredFiles() {
     if (!checkRequiredFiles([
       paths.appPublic,
+      paths.appStatic,
       paths.appPages,
+      paths.appPackageJson,
       paths.appNodeModules,
+      paths.appErrorPage,
       paths.appLocales,
       paths.appConfig,
+      paths.appStoreReducers,
+      paths.appDefaultStore,
+      paths.routes,
     ])) {
       if (process.env.NODE_ENV === 'test') return false;
       process.exit(1);
     }
     return true;
   }
-
 
   /**
    * Enable CORS protection on production

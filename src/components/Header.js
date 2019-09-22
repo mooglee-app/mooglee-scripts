@@ -3,13 +3,13 @@ import Grid             from '@material-ui/core/Grid';
 import Toolbar          from '@material-ui/core/Toolbar';
 import clx              from 'classnames';
 import React            from 'react';
-import envBoolean       from '../tools/envBoolean';
-import paths            from '../lib/paths'
+import getAppExports   from '../appExports';
 import componentWrapper from '../helpers/componentWrapper';
+import envBoolean       from '../tools/envBoolean';
 import LangSwitch       from './LangSwitch';
 import Link             from './Link';
 
-const packageJson = require('../../../../package');
+const {packageJson} = getAppExports();
 
 const styles = theme => ({
 
