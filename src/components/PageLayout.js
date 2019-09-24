@@ -6,7 +6,6 @@ import Inspector      from 'react-inspector';
 import getAppExports  from '../appExports';
 import config         from '../config';
 import Head           from './Head';
-import Header         from './Header';
 
 
 const Error = getAppExports().errorPage;
@@ -54,6 +53,8 @@ const styles = theme => ({
 const PageLayout = withStyles(styles)(function Layout(props) {
 
   let {
+        Header, // A component to be used as a header
+        Footer, // A component to be used as a footer
         pageData, // The pageData object received by the component
         children, // the page content
         classes,
@@ -73,13 +74,13 @@ const PageLayout = withStyles(styles)(function Layout(props) {
   return (
     <div className={`${classes.root} page-${pageData.title}`} style={backgroundColor ? { backgroundColor } : {}}>
       <Head {...pageData}/>
-      <Header/>
+      {Header}
       <Container className={classes.container} fixed>
         <div className={classes.content}>
           {children}
         </div>
       </Container>
-
+      {Footer}
       {
         // Optional inspector tool displayed at the bottom of the page
         process.env.NODE_ENV === 'development' && typeof debug === 'object' &&
@@ -111,6 +112,8 @@ PageLayout.propTypes = {
   classes: PropTypes.object,
   backgroundColor: PropTypes.string,
   debug: PropTypes.object,
+  Header: PropTypes.any,
+  Footer: PropTypes.any,
 };
 
 export default PageLayout;
