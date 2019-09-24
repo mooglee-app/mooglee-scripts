@@ -1,9 +1,11 @@
 const deepmerge = require('deepmerge');
 const getAppExports    = require('../appExports');
+const getEnvConfig = require('./env.config');
+const userConfig = getAppExports(true).config;
 
 module.exports = deepmerge(
-  getAppExports(true).config,
+  userConfig,
   {
-    env: require('./env.config.js'),
+    env: getEnvConfig(userConfig),
   },
 );
