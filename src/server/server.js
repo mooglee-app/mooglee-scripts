@@ -174,19 +174,24 @@ class App {
    * On test env, it should only return false if a path is missing
    */
   checkRequiredFiles() {
-    if (!checkRequiredFiles([
+    const requiredFilesPaths = [
       paths.appPublic,
       paths.appStatic,
       paths.appPages,
       paths.appPackageJson,
       paths.appNodeModules,
       paths.appErrorPage,
-      paths.appLocales,
       paths.appConfig,
       paths.appStoreReducers,
       paths.appDefaultStore,
       paths.routes,
-    ])) {
+    ];
+
+    if (config.lang.enabled) {
+      requiredFilesPaths.push(paths.appLocales)
+    }
+
+    if (!checkRequiredFiles(requiredFilesPaths)) {
       if (process.env.NODE_ENV === 'test') return false;
       process.exit(1);
     }
