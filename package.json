@@ -1,6 +1,6 @@
 {
   "name": "@mooglee/core",
-  "version": "0.1.10",
+  "version": "0.1.11",
   "description": "",
   "main": "/src/index.js",
   "_appRelativePath": "../../../",
@@ -48,6 +48,7 @@
     "keycode": "^2.2.0",
     "markdown-loader": "^5.0.0",
     "next": "^9.0.2",
+    "next-compose-plugins": "^2.2.0",
     "next-i18next": "^0.47.0",
     "next-offline": "^4.0.2",
     "next-redux-wrapper": "^3.0.0-alpha.3",

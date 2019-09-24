@@ -1,9 +1,7 @@
-const getClientEnvironment = require('./env');
+const getClientEnvironment = require('../server/env');
 const webpack              = require('webpack');
-const config               = require('../config');
-const env                  = getClientEnvironment(config.server.getUrl());
+const env                  = getClientEnvironment();
 const Visualizer           = require('webpack-visualizer-plugin');
-const path                 = require('path');
 const envBoolean           = require('../tools/envBoolean');
 const paths                = require('../lib/paths');
 
