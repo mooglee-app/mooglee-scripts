@@ -1,4 +1,3 @@
-import Container      from '@material-ui/core/Container';
 import { withStyles } from '@material-ui/core/styles';
 import PropTypes      from 'prop-types';
 import React          from 'react';
@@ -11,29 +10,8 @@ import Head           from './Head';
 const Error = getAppExports().errorPage;
 
 const styles = theme => ({
-
   root: {
     background: theme.palette.background.primary,
-  },
-
-  container: {
-    minHeight: '100vh',
-    margin: 'auto',
-    overflow: 'hidden',
-    paddingTop: `${theme.spacing(8)}px`,
-    paddingBottom: `${theme.spacing(8)}px`,
-    [theme.breakpoints.down('md')]: {
-      paddingTop: `${theme.spacing(8)}px`,
-      paddingBottom: `${theme.spacing(8)}px`,
-    },
-    [theme.breakpoints.down('sm')]: {
-      paddingTop: `${theme.spacing(6)}px`,
-      paddingBottom: `${theme.spacing(6)}px`,
-    },
-    [theme.breakpoints.down('xs')]: {
-      paddingTop: `${theme.spacing(6)}px`,
-      paddingBottom: `${theme.spacing(6)}px`,
-    },
   },
 });
 
@@ -60,6 +38,7 @@ const PageLayout = withStyles(styles)(function Layout(props) {
         classes,
         backgroundColor, // The background color of the page
         debug, // An object to display on the inspector tool (dev only)
+        fullWidth,
         ...rest // Any other property will be assigned to the pageData object
       } = props;
 
@@ -69,17 +48,19 @@ const PageLayout = withStyles(styles)(function Layout(props) {
     return <Error statusCode={statusCode}/>;
   }
 
+  const containerStyles = {};
+
+  if (fullWidth) {
+    containerStyles.width = '100vw';
+  }
+
   Object.assign(pageData || {}, rest);
 
   return (
     <div className={`${classes.root} page-${pageData.title}`} style={backgroundColor ? { backgroundColor } : {}}>
       <Head {...pageData}/>
       {Header}
-      <Container className={classes.container} fixed>
-        <div className={classes.content}>
-          {children}
-        </div>
-      </Container>
+      {children}
       {Footer}
       {
         // Optional inspector tool displayed at the bottom of the page
@@ -114,6 +95,7 @@ PageLayout.propTypes = {
   debug: PropTypes.object,
   Header: PropTypes.any,
   Footer: PropTypes.any,
+  fullWidth: PropTypes.bool,
 };
 
 export default PageLayout;
