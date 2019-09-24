@@ -1,11 +1,11 @@
-import { withStyles }                             from '@material-ui/core/styles';
-import withMUITheme                               from '@material-ui/styles/withTheme';
-import React                                      from 'react';
-import { connect }                                from 'react-redux';
-import { compose }                                from 'recompose';
-import config                                     from '../config';
-import { getInitialProps, I18n, withTranslation } from '../lib/i18n';
-import withPageData                               from '../tools/withPageData';
+import { withStyles }                       from '@material-ui/core/styles';
+import withMUITheme                         from '@material-ui/styles/withTheme';
+import React                                from 'react';
+import { connect }                          from 'react-redux';
+import { compose }                          from 'recompose';
+import config                               from '../config';
+import { getInitialProps, withTranslation } from '../lib/i18n';
+import withPageData                         from '../tools/withPageData';
 
 
 /**
@@ -32,7 +32,6 @@ export default (Component, {
   withTheme = false,
   noPageData = false,
 }) => {
-  const _namespaces = config.lang.namespaces.includes(name) ? [name, ...namespaces] : namespaces;
 
   const args = [
     withPageData(name, { required: config.api.fetchPagesData ? !noPageData : false }),
@@ -41,6 +40,7 @@ export default (Component, {
   ];
 
   if (config.lang.enabled) {
+    const _namespaces = config.lang.namespaces.includes(name) ? [name, ...namespaces] : namespaces;
     args.push(withTranslation(_namespaces));
 
     // This way we do not have to define namespacesRequired two times in every page components

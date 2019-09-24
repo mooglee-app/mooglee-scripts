@@ -270,6 +270,11 @@ class App {
           return;
         }
 
+        // This can append when an error occurred
+        if (res.headersSent === true) {
+          return;
+        }
+
         try {
           const html = await this.nextApp.renderToHTML(req, res, routeConfig.page, queryParams);
 
