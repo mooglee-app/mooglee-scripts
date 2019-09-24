@@ -2,9 +2,9 @@ import Typography           from '@material-ui/core/Typography';
 import classNames           from 'classnames';
 import propTypes            from 'prop-types';
 import React                from 'react';
-import getAppExports            from '../appExports';
+import getAppExports        from '../appExports';
 import config               from '../config';
-import wrapper              from '../helpers/componentWrapper';
+import wrapper              from '../wrappers/componentWrapper';
 import { Link as NextLink } from '../lib/i18n';
 import removeUrlLastSlash   from '../tools/removeUrlLastSlash';
 

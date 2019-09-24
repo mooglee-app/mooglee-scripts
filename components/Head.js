@@ -1,7 +1,7 @@
-import Head            from 'next/head';
-import React           from 'react';
-import getAppExports  from '../appExports';
-import config          from '../config';
+import Head          from 'next/head';
+import React         from 'react';
+import getAppExports from '../appExports';
+import config        from '../config';
 
 const {packageJson} = getAppExports();
 

@@ -1,5 +1,5 @@
-import React            from 'react';
-import getAppExports  from '../appExports';
+import React         from 'react';
+import getAppExports from '../appExports';
 
 
 const fetchPage = getAppExports().pagesActions.fetchPage;

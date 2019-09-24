@@ -16,8 +16,9 @@ module.exports = function (safe = false) {
     : {
       pagesActions: require('../../../store/actions/pages.actions'),
       defaultStore: require('../../../store/defaultStore').default,
+      appActions: require('../../../store/actions/app.actions'),
       reducers: require('../../../store/reducers').default,
-      errorPage: require('../../../pages/_error').default,
+      theme: require('../../../theme').default,
       ...cjsExports,
     };
 

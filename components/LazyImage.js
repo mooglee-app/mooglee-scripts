@@ -1,7 +1,7 @@
 import classNames from 'classnames';
 import propTypes  from 'prop-types';
 import React      from 'react';
-import wrapper    from '../helpers/componentWrapper';
+import wrapper    from '../wrappers/componentWrapper';
 import NoScript   from './NoScript';
 import Skeleton   from './Skeleton';
 

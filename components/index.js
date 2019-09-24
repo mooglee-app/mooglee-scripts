@@ -1,5 +1,4 @@
 export { default as Head }            from './Head';
-export { default as Header }          from './Header';
 export { default as LangSwitch }      from './LangSwitch';
 export { default as LazyImage }       from './LazyImage';
 export { default as Link }            from './Link';
