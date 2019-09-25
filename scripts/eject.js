@@ -115,8 +115,8 @@ inquirer
       return _file.replace(paths.ownPath, paths.app);
     });
 
-    appFiles.push(path.join(appPath, 'babel.config.js'));
     files.push(path.join(ownPath, 'babel.config.js'));
+    files.push(path.join(ownPath, 'next.config.js'));
     files.push(path.join(ownPath, 'appExports.js'));
 
 
@@ -144,8 +144,8 @@ inquirer
             /\/\/ @remove-on-eject-begin([\s\S]*?)\/\/ @remove-on-eject-end/gm,
             '',
           )
-          .replace(/\/\*\*@add-on-eject@/g, '')
-          .replace(/@add-on-eject@\*\*\//g, '')
+          .replace(/\/\*@add-on-eject-begin@/g, '')
+          .replace(/@add-on-eject-end@\*\//g, '')
           .trim() + '\n';
 
       // Update the relative paths in appExports.js
