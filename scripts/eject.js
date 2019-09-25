@@ -86,19 +86,14 @@ inquirer
     const ownPath = paths.ownPath;
     const appPath = paths.app;
 
-    function verifyAbsent(file) {
-      if (fs.existsSync(path.join(appPath, file))) {
-        console.error(
-          `\`${file}\` already exists in your app folder. We cannot ` +
-          'continue as you would lose all the changes in that file or directory. ' +
-          'Please move or delete it (maybe make a copy for backup) and run this ' +
-          'command again.',
-        );
-        process.exit(1);
+    function verifyAbsent(file, index) {
+      if (fs.existsSync(file)) {
+        delete files[index];
       }
     }
 
     const folders = ['config', 'components', 'pages', 'store', 'lib', 'scripts', 'server', 'tools', 'wrappers'];
+
 
     // Make shallow array of files paths
     const files = folders.reduce((files, folder) => {
@@ -112,12 +107,17 @@ inquirer
       );
     }, []);
 
+    // Make shallow array of files paths
+    const appFiles = files.map(_file => {
+      return _file.replace(paths.ownPath, paths.app)
+    })
+
+    appFiles.push(path.join(appPath, 'babel.config.js'))
     files.push(path.join(ownPath, 'babel.config.js'))
 
 
     // Ensure that the app folder is clean and we won't override any files
-    files.forEach(verifyAbsent);
-
+    appFiles.forEach(verifyAbsent);
     console.log(cyan(`Copying files into ${appPath}`));
 
     folders.forEach(folder => {
