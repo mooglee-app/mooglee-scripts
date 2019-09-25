@@ -19,6 +19,7 @@ module.exports = function (safe = false) {
       appActions: require('../../../store/actions/app.actions'),
       reducers: require('../../../store/reducers').default,
       theme: require('../../../theme').default,
+      errorPage: require('../../../pages/_error').default,
       ...cjsExports,
     };
 
