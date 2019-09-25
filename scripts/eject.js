@@ -17,6 +17,7 @@ const paths     = require('../lib/paths');
 const inquirer  = require('react-dev-utils/inquirer');
 const spawnSync = require('react-dev-utils/crossSpawn').sync;
 const os        = require('os');
+const replace   = require('replace-in-file');
 
 const green = chalk.green;
 const cyan  = chalk.cyan;
@@ -86,8 +87,10 @@ inquirer
     const ownPath = paths.ownPath;
     const appPath = paths.app;
 
+    // Do not override any existent file in the app directory
     function verifyAbsent(file, index) {
-      if (fs.existsSync(file)) {
+      const exceptions = ['_app.js', '_document.js', 'next.config.js'];
+      if (fs.existsSync(file) && !exceptions.find(_exc => file.indexOf(_exc) >= 0)) {
         delete files[index];
       }
     }
@@ -109,11 +112,12 @@ inquirer
 
     // Make shallow array of files paths
     const appFiles = files.map(_file => {
-      return _file.replace(paths.ownPath, paths.app)
-    })
+      return _file.replace(paths.ownPath, paths.app);
+    });
 
-    appFiles.push(path.join(appPath, 'babel.config.js'))
-    files.push(path.join(ownPath, 'babel.config.js'))
+    appFiles.push(path.join(appPath, 'babel.config.js'));
+    files.push(path.join(ownPath, 'babel.config.js'));
+    files.push(path.join(ownPath, 'appExports.js'));
 
 
     // Ensure that the app folder is clean and we won't override any files
@@ -140,12 +144,16 @@ inquirer
             /\/\/ @remove-on-eject-begin([\s\S]*?)\/\/ @remove-on-eject-end/gm,
             '',
           )
-          // Remove dead code from .applescript files on eject
-          .replace(
-            /-- @remove-on-eject-begin([\s\S]*?)-- @remove-on-eject-end/gm,
-            '',
-          )
+          .replace(/\/\*\*@add-on-eject@/g, '')
+          .replace(/@add-on-eject@\*\*\//g, '')
           .trim() + '\n';
+
+      // Update the relative paths in appExports.js
+      if (file.indexOf('appExports.js')) {
+        content =
+          content
+            .replace(/..\/..\/./g, '');
+      }
       console.log(`  Adding ${cyan(file.replace(ownPath, ''))} to the project`);
       fs.writeFileSync(file.replace(ownPath, appPath), content);
     });
@@ -192,7 +200,7 @@ inquirer
     delete appPackage.scripts['eject'];
     Object.keys(appPackage.scripts).forEach(key => {
       appPackage.scripts[key] = appPackage.scripts[key].replace(
-        /@mooglee\/core\/scripts/g,
+        /node_modules\/@mooglee\/core\/scripts/g,
         './scripts',
       );
     });
@@ -218,16 +226,48 @@ inquirer
     }**/
 
 
-    console.log(cyan('Running npm install...'));
-    spawnSync('npm', ['install', '--loglevel', 'error'], {
-      stdio: 'inherit',
-    });
+    console.log(cyan('Resolving the @mooglee/core imports'));
 
-    console.log(green('Ejected successfully!'));
-    console.log();
+    const appPathDepth = appPath.split('/').length;
 
-    if (tryGitAdd(appPath)) {
-      console.log(cyan('Staged ejected files for commit.'));
-      console.log();
-    }
+    // Replace all the "@mooglee/core" occurrences in the app by the matching relative path
+    replace({
+      files: [
+        `${appPath}/**`,
+        `${appPath}/**/**`,
+        `${appPath}/**/**/**`,
+        `${appPath}/**/**/**/**`,
+      ],
+      from:  /@mooglee\/core/g,
+      to: (...args) => {
+        const filePath = args[3];
+        const filePathDepth = filePath.split('/').length;
+        return ['', '.', '..', '../..', '../../..', '../../../..'][filePathDepth - appPathDepth];
+      },
+      ignore: [
+        `${appPath}/node_modules/**`,
+        `${appPath}/build/**`,
+        `${appPath}/.git/**`,
+        `${appPath}/package.json`,
+        `${appPath}/package-lock.json`,
+      ],
+    })
+      .catch(error => {
+        throw error
+      })
+      .then(function() {
+        console.log();
+        console.log(cyan('Running npm install...'));
+        spawnSync('npm', ['install', '--loglevel', 'error'], {
+          stdio: 'inherit',
+        });
+
+        console.log(green('Ejected successfully!'));
+        console.log();
+
+        if (tryGitAdd(appPath)) {
+          console.log(cyan('Staged ejected files for commit.'));
+          console.log();
+        }
+      })
   });
