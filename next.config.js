@@ -3,14 +3,16 @@ const webpackConfig = require('./config/webpack.config');
 //@remove-on-eject-begin
 const withTM        = require('next-transpile-modules');
 //@remove-on-eject-end
-/*@add-on-eject-begin@const withOffline = require('next-offline');@add-on-eject-end@*/
+const withOffline   = require('next-offline');
 
-module.exports = /*@add-on-eject-begin@withOffline(@add-on-eject-end@**/withSass(
+const nextConfig = withSass(
   //@remove-on-eject-begin
   withTM(
     //@remove-on-eject-end
     {
+      //@remove-on-eject-begin
       transpileModules: ['@mooglee', '@mooglee/core'],
+      //@remove-on-eject-end
       cssModules: true,
       distDir: './build', // from client folder
       dontAutoRegisterSw: true,
@@ -25,3 +27,5 @@ module.exports = /*@add-on-eject-begin@withOffline(@add-on-eject-end@**/withSass
         return webpackConfig(config, { isServer, buildId, distDir, dev });
       },
     }));
+
+module.exports = process.env.NODE_ENV === 'production' ? withOffline(nextConfig) : nextConfig;

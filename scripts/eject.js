@@ -110,14 +110,14 @@ inquirer
       );
     }, []);
 
+    files.push(path.join(ownPath, 'next.config.js'));
+    files.push(path.join(ownPath, 'appExports.js'));
+
     // Make shallow array of files paths
     const appFiles = files.map(_file => {
       return _file.replace(paths.ownPath, paths.app);
     });
 
-    files.push(path.join(ownPath, 'babel.config.js'));
-    files.push(path.join(ownPath, 'next.config.js'));
-    files.push(path.join(ownPath, 'appExports.js'));
 
 
     // Ensure that the app folder is clean and we won't override any files
@@ -141,7 +141,7 @@ inquirer
         content
         // Remove dead code from .js files on eject
           .replace(
-            /\/\/ @remove-on-eject-begin([\s\S]*?)\/\/ @remove-on-eject-end/gm,
+            /\/\/@remove-on-eject-begin.*@remove-on-eject-end/gm,
             '',
           )
           .replace(/\/\*@add-on-eject-begin@/g, '')
