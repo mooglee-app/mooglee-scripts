@@ -119,7 +119,6 @@ inquirer
     });
 
 
-
     // Ensure that the app folder is clean and we won't override any files
     appFiles.forEach(verifyAbsent);
     console.log(cyan(`Copying files into ${appPath}`));
@@ -163,18 +162,12 @@ inquirer
     const appPackage = require(path.join(appPath, 'package.json'));
 
     console.log(cyan('Updating the dependencies'));
-    const ownPackageName = ownPackage.name;
-    if (appPackage.devDependencies) {
-      /**      if (appPackage.devDependencies[ownPackageName]) {
-        console.log(`  Removing ${cyan(ownPackageName)} from devDependencies`);
-        delete appPackage.devDependencies[ownPackageName];
-      }**/
-    }
+    const ownPackageName    = ownPackage.name;
     appPackage.dependencies = appPackage.dependencies || {};
-    /**    if (appPackage.dependencies[ownPackageName]) {
+    if (appPackage.dependencies[ownPackageName]) {
       console.log(`  Removing ${cyan(ownPackageName)} from dependencies`);
       delete appPackage.dependencies[ownPackageName];
-    }**/
+    }
     Object.keys(ownPackage.dependencies).forEach(key => {
       // For some reason optionalDependencies end up in dependencies after install
       if (
@@ -216,14 +209,14 @@ inquirer
     console.log();
 
     // "Don't destroy what isn't ours"
-    /**    if (ownPath.indexOf(appPath) === 0) {
+    if (ownPath.indexOf(appPath) === 0) {
       try {
         // remove @mooglee/core from app node_modules
         fs.removeSync(ownPath);
       } catch (e) {
         // It's not essential that this succeeds
       }
-    }**/
+    }
 
 
     console.log(cyan('Resolving the @mooglee/core imports'));
@@ -238,9 +231,9 @@ inquirer
         `${appPath}/**/**/**`,
         `${appPath}/**/**/**/**`,
       ],
-      from:  /@mooglee\/core/g,
+      from: /@mooglee\/core/g,
       to: (...args) => {
-        const filePath = args[3];
+        const filePath      = args[3];
         const filePathDepth = filePath.split('/').length;
         return ['', '.', '..', '../..', '../../..', '../../../..'][filePathDepth - appPathDepth];
       },
@@ -253,9 +246,9 @@ inquirer
       ],
     })
       .catch(error => {
-        throw error
+        throw error;
       })
-      .then(function() {
+      .then(function () {
         console.log();
         console.log(cyan('Running npm install...'));
         spawnSync('npm', ['install', '--loglevel', 'error'], {
@@ -269,5 +262,5 @@ inquirer
           console.log(cyan('Staged ejected files for commit.'));
           console.log();
         }
-      })
+      });
   });
