@@ -140,11 +140,11 @@ inquirer
         content
         // Remove dead code from .js files on eject
           .replace(
-            /\/\/@remove-on-eject-begin.*@remove-on-eject-end/gm,
+            /\/\/@remove-on-eject-begin([\s\S]*?)\/\/@remove-on-eject-end/mgs,
             '',
           )
-          .replace(/\/\*@add-on-eject-begin@/g, '')
-          .replace(/@add-on-eject-end@\*\//g, '')
+          .replace(/\/\*@add-on-eject-begin/g, '')
+          .replace(/@add-on-eject-end\*\//g, '')
           .trim() + '\n';
 
       // Update the relative paths in appExports.js
@@ -160,6 +160,8 @@ inquirer
 
     const ownPackage = require(path.join(ownPath, 'package.json'));
     const appPackage = require(path.join(appPath, 'package.json'));
+
+    appPackage._isEjectedApp = true;
 
     console.log(cyan('Updating the dependencies'));
     const ownPackageName    = ownPackage.name;

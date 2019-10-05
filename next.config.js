@@ -5,12 +5,10 @@ const withTM        = require('next-transpile-modules');
 //@remove-on-eject-end
 const withOffline   = require('next-offline');
 
-const nextConfig = withSass(
+const nextConfig = withSass(/*@add-on-eject-begin({@add-on-eject-end*/
   //@remove-on-eject-begin
   withTM(
-    //@remove-on-eject-end
     {
-      //@remove-on-eject-begin
       transpileModules: ['@mooglee', '@mooglee/core'],
       //@remove-on-eject-end
       cssModules: true,

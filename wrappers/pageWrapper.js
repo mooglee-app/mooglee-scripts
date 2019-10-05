@@ -51,7 +51,7 @@ export default (Component, {
             ? await ComposedComponent.getInitialProps(Object.assign({}, props, /*{ pageData }*/))
             : {};
 
-          return Object.assign({}, initialProps, { namespacesRequired: _namespaces });
+          return Object.assign({}, initialProps, { namespacesRequired: [config.lang.defaultNamespace, ..._namespaces] });
         };
 
         return Extended;
