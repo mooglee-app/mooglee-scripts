@@ -89,7 +89,7 @@ class Link extends React.Component {
     target: '_self',
     prefetch: false,
     urlQuery: '',
-    linkStyle: { display: 'flex' },
+    linkStyle: {},
     disabled: false,
     checkSubActive: false,
     linkAttributes: {},

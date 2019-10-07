@@ -17,7 +17,7 @@ import { withTranslation }              from '../lib/i18n';
  * @param {object} styles: custom component styles
  * @param {boolean} isTranslatable: defines if the component should be translatable (will add the 't' function)
  * @param {boolean} isConnected: defines if the component should be connected to redux store
- * @param {boolean} hasStyles: defines if the component has MUI styles
+ * @param {boolean} hasStyles: defines if the component uses MUI styles
  * @param {boolean} withTheme: defines if the theme should be injected to the component's props
  * @param {boolean} withWidth: defines if the current screen size breakpoint should be injected to the component's props
  * @param {boolean} withRouter: inject the pathname, query and asPath into the component
@@ -27,7 +27,7 @@ import { withTranslation }              from '../lib/i18n';
 export default (Component, {
   mapStateToProps = null,
   styles = {},
-  isTranslatable = true,
+  isTranslatable = false,
   isConnected = false,
   hasStyles = true,
   withTheme = false,
