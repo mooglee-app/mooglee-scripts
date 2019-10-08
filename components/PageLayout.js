@@ -45,6 +45,9 @@ const PageLayout = withStyles(styles)(function Layout(props) {
   // Display an error if pageData is not defined or if it contains an error
   if (!pageData || pageData.error === 404 || (pageData.error && pageData.error !== 404)) {
     const statusCode = pageData && pageData.statusCode ? pageData.statusCode : 404;
+    const message = process.env.NODE_ENV === 'production'
+      ? null
+      : 'Warning : No pageData has been provided to the PageLayout component. On production this will result in a 404 error page.'
     return <Error statusCode={statusCode}/>;
   }
 
@@ -88,8 +91,8 @@ PageLayout.defaultProps = {
 };
 
 PageLayout.propTypes = {
-  pageData: PropTypes.object,
-  children: PropTypes.any,
+  pageData: PropTypes.object.isRequired,
+  children: PropTypes.any.isRequired,
   classes: PropTypes.object,
   backgroundColor: PropTypes.string,
   debug: PropTypes.object,
