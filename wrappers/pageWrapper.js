@@ -31,7 +31,7 @@ export default (Component, {
   styles = {},
   withTheme = false,
   noPageData = false,
-}) => {
+} = {}) => {
 
   const args = [
     withPageData(name, { required: config.api.fetchPagesData ? !noPageData : false }),

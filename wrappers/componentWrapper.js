@@ -34,7 +34,7 @@ export default (Component, {
   withWidth = false,
   withRouter = false,
   namespaces = [],
-}) => {
+} = {}) => {
   const args = [];
 
   if (isConnected || typeof mapStateToProps === 'function') args.push(connect(mapStateToProps));
