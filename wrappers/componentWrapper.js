@@ -35,17 +35,13 @@ export default (Component, {
   withRouter = false,
   namespaces = [],
 } = {}) => {
-  const args = [];
+  const args = [
+    ...((isConnected || typeof mapStateToProps === 'function')  ? [connect(mapStateToProps)] : []),
+    ...((hasStyles || typeof styles === 'object') ? [withStyles(styles, { withTheme: withTheme })] : []),
+      ...(withWidth ? [withUIWidth({ initialWidth: 'lg', withTheme })] : []),
+    ...((config.lang.enabled && isTranslatable) ? [withTranslation([config.lang.defaultNamespace, ...namespaces])] : []),
+    ...(withRouter ? [withNextRouter] : [])
+  ];
 
-  if (isConnected || typeof mapStateToProps === 'function') args.push(connect(mapStateToProps));
-  if (hasStyles || typeof styles === 'object') args.push(withStyles(styles, { withTheme: withTheme }));
-  if (withWidth) args.push(withUIWidth({ initialWidth: 'lg', withTheme }));
-
-  if (config.lang.enabled) {
-    args.push(withTranslation([config.lang.defaultNamespace, ...namespaces]));
-  }
-
-  if (withRouter) Component = withNextRouter(Component);
-
-  return compose.apply(this, args)(Component);
+  return compose(...args)(Component);
 };
