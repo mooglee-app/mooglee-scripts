@@ -22,7 +22,7 @@ function setAppSettings(state, action) {
   };
 }
 
-export default (state = {}, action) => {
+export default (state = {}, action = {}) => {
   switch (action.type) {
 
     case actionTypes.CORE_PUSH_PAGE:

@@ -17,7 +17,7 @@ const { defaultStore, packageJson, reducers, routes } = getAppExports();
 
 const combinedReducers = combineReducers({
   ...reducers,
-  core: coreReducers()
+  core: coreReducers
 });
 
 const isServer = !process.browser;
