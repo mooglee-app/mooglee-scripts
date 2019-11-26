@@ -45,7 +45,7 @@ export default (pageName = '', opts = {}) => ComposedComponent => {
       try {
         pageData = await lazyGetPageData(pageName, props.store.dispatch);
       } catch (err) {
-        pageData = { error: getErrorStatus(err) || 404 }; // Store the status of the error somewhere
+        pageData = { error: { code: getErrorStatus(err) || 404 } }; // Store the status of the error somewhere
       }
     }
 

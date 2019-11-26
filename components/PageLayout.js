@@ -2,12 +2,9 @@ import { withStyles } from '@material-ui/core/styles';
 import PropTypes      from 'prop-types';
 import React          from 'react';
 import Inspector      from 'react-inspector';
-import getAppExports  from '../appExports';
 import config         from '../config';
 import Head           from './Head';
 
-
-const Error = getAppExports().errorPage;
 
 const styles = theme => ({
   root: {
@@ -35,27 +32,28 @@ const PageLayout = withStyles(styles)(function Layout(props) {
         Footer, // A component to be used as a footer
         pageData, // The pageData object received by the component
         children, // the page content
-        classes,
         backgroundColor, // The background color of the page
         debug, // An object to display on the inspector tool (dev only)
-        fullWidth,
-        ...rest // Any other property will be assigned to the pageData object
+        classes,
+        ...rest
       } = props;
 
   // Display an error if pageData is not defined or if it contains an error
-  if (!pageData || pageData.error === 404 || (pageData.error && pageData.error !== 404)) {
-    const statusCode = pageData && pageData.statusCode ? pageData.statusCode : 404;
-    const message = process.env.NODE_ENV === 'production'
-      ? null
-      : 'Warning : No pageData has been provided to the PageLayout component. On production this will result in a 404 error page.'
-    return <Error statusCode={statusCode}/>;
+  if (!pageData || pageData.error) {
+    const e = new Error(pageData.error);
+    e.code  = 'ENOENT';  // Triggers a 404
+
+    if (process.env.NODE_ENV === 'development') {
+      console.warn(
+        '\nNo `pageData` prop have been passed to the `PageLayout` component of your page.\nThis will end with a 404 redirection. The `pageLayout` prop is required.\n');
+    }
+
+    throw e;
   }
 
-  const containerStyles = {};
-
-  if (fullWidth) {
-    containerStyles.width = '100vw';
-  }
+  pageData = pageData || {
+    title: config.seo.defaultPagesTitle,
+  };
 
   Object.assign(pageData || {}, rest);
 
@@ -98,6 +96,7 @@ PageLayout.propTypes = {
   debug: PropTypes.object,
   Header: PropTypes.any,
   Footer: PropTypes.any,
+  requiredPageData: PropTypes.bool,
   fullWidth: PropTypes.bool,
 };
 
