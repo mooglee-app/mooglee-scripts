@@ -36,11 +36,11 @@ export default (Component, {
   namespaces = [],
 } = {}) => {
   const args = [
-    ...((isConnected || typeof mapStateToProps === 'function')  ? [connect(mapStateToProps)] : []),
+    ...((isConnected || typeof mapStateToProps === 'function') ? [connect(mapStateToProps)] : []),
     ...((hasStyles || typeof styles === 'object') ? [withStyles(styles, { withTheme: withTheme })] : []),
-      ...(withWidth ? [withUIWidth({ initialWidth: 'lg', withTheme })] : []),
+    ...(withWidth ? [withUIWidth({ initialWidth: 'lg', withTheme })] : []),
     ...((config.lang.enabled && isTranslatable) ? [withTranslation([config.lang.defaultNamespace, ...namespaces])] : []),
-    ...(withRouter ? [withNextRouter] : [])
+    ...(withRouter ? [withNextRouter] : []),
   ];
 
   return compose(...args)(Component);
