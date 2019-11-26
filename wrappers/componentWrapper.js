@@ -38,7 +38,7 @@ export default (Component, {
   const args = [];
 
   if (isConnected || typeof mapStateToProps === 'function') args.push(connect(mapStateToProps));
-  if (hasStyles || typeof styles === 'object') args.push(withStyles(styles, { withTheme: withTheme && !withWidth }));
+  if (hasStyles || typeof styles === 'object') args.push(withStyles(styles, { withTheme: withTheme }));
   if (withWidth) args.push(withUIWidth({ initialWidth: 'lg', withTheme }));
 
   if (config.lang.enabled) {

@@ -1,11 +1,10 @@
-import { withStyles }                       from '@material-ui/core/styles';
-import withMUITheme                         from '@material-ui/styles/withTheme';
-import React                                from 'react';
-import { connect }                          from 'react-redux';
-import { compose }                          from 'recompose';
-import config                               from '../config';
-import { getInitialProps, withTranslation } from '../lib/i18n';
-import withPageData                         from '../tools/withPageData';
+import { withStyles }      from '@material-ui/core/styles';
+import React               from 'react';
+import { connect }         from 'react-redux';
+import { compose }         from 'recompose';
+import config              from '../config';
+import withPageData        from '../tools/withPageData';
+import withTranslation     from '../tools/withTranslation';
 
 
 /**
@@ -36,29 +35,9 @@ export default (Component, {
   const args = [
     withPageData(name, { required: config.api.fetchPagesData ? !noPageData : false }),
     connect(mapStateToProps),
-    withStyles(styles),
+    withStyles(styles, { withTheme: withTheme }),
+    withTranslation(name, namespaces, config)
   ];
 
-  if (config.lang.enabled) {
-    const _namespaces = config.lang.namespaces.includes(name) ? [name, ...namespaces] : namespaces;
-    args.push(withTranslation(_namespaces));
-
-    // This way we do not have to define namespacesRequired two times in every page components
-    args.push(ComposedComponent => {
-        const Extended           = (props) => React.createElement(ComposedComponent, props);
-        Extended.getInitialProps = async (props = {}) => {
-          const initialProps = ComposedComponent.getInitialProps
-            ? await ComposedComponent.getInitialProps(Object.assign({}, props, /*{ pageData }*/))
-            : {};
-
-          return Object.assign({}, initialProps, { namespacesRequired: [config.lang.defaultNamespace, ..._namespaces] });
-        };
-
-        return Extended;
-      },
-    );
-  }
-
-  return withMUITheme(compose(...args)(Component), withTheme);
-
+  return compose(...args)(Component);
 };
