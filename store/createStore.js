@@ -6,11 +6,19 @@ import thunk                            from 'redux-thunk';
 import getAppExports                    from '../appExports';
 import config                           from '../config';
 import Socket                           from '../lib/socket';
+import { combineReducers } from 'redux';
+import coreReducers from './core.reducers'
 
 // Items that be stored in the localStorage
 const { localStorageStates } = config.redux;
 
 const { defaultStore, packageJson, reducers, routes } = getAppExports();
+
+
+const combinedReducers = combineReducers({
+  ...reducers,
+  core: coreReducers()
+});
 
 const isServer = !process.browser;
 const logger   = process.env.NODE_ENV === 'production'
@@ -31,13 +39,13 @@ const socket = new Socket();
 // go place to inject other data, settings, etc
 
 const DEFAULT_STATE = {
-  app: {
+  core: {
     lang: config.lang.default,
     routes,
+    pages: {}
   },
   ...defaultStore,
 };
-
 
 export default (initialState = DEFAULT_STATE) => {
 
@@ -45,14 +53,14 @@ export default (initialState = DEFAULT_STATE) => {
   // fired on the server side
 
   if (isServer) {
-    return createStore(reducers, initialState, applyMiddleware(thunk.withExtraArgument(socket)));
+    return createStore(combinedReducers, initialState, applyMiddleware(thunk.withExtraArgument(socket)));
   } else {
     initialState = deepmerge(
       load({ states: localStorageStates, namespace: packageJson.name }),
       initialState,
     );
     return createStore(
-      reducers,
+      combinedReducers,
       initialState,
       applyMiddleware(
         save({ states: localStorageStates, namespace: packageJson.name }),
@@ -61,5 +69,4 @@ export default (initialState = DEFAULT_STATE) => {
       ),
     );
   }
-
 };

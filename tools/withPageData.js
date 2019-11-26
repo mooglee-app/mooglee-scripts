@@ -1,8 +1,5 @@
 import React         from 'react';
-import getAppExports from '../appExports';
-
-
-const fetchPage = getAppExports().pagesActions.fetchPage;
+import { fetchPage } from '../store/core.actions';
 
 
 function getErrorStatus(error = {}) {
@@ -41,9 +38,9 @@ export default (pageName = '', opts = {}) => ComposedComponent => {
     // Resolve page data
     let pageData = {};
 
-    const currentStore = props.store.getState();
-    if (currentStore && currentStore.pages && currentStore.pages[pageName]) {
-      pageData = currentStore.pages[pageName];
+    const currentStore = props.store.getState() || {};
+    if (currentStore.core && currentStore.core.pages && currentStore.core.pages[pageName]) {
+      pageData = currentStore.core.pages[pageName];
     } else if (required) {
       try {
         pageData = await lazyGetPageData(pageName, props.store.dispatch);

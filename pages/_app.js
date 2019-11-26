@@ -1,19 +1,20 @@
-import CssBaseline                             from '@material-ui/core/CssBaseline';
-import Hidden                                  from '@material-ui/core/Hidden';
-import { ThemeProvider }                       from '@material-ui/styles';
-import config                                  from '@mooglee/core/config';
-import { appWithTranslation, i18n }            from '@mooglee/core/lib/i18n';
-import createStore  from '@mooglee/core/store/createStore';
-import envBoolean   from '@mooglee/core/tools/envBoolean';
-import withRedux    from 'next-redux-wrapper';
-import App          from 'next/app';
-import NProgress    from 'nprogress';
-import React        from 'react';
-import { Provider } from 'react-redux';
-import appExports   from '../appExports'
+import CssBaseline                          from '@material-ui/core/CssBaseline';
+import Hidden                               from '@material-ui/core/Hidden';
+import { ThemeProvider }                    from '@material-ui/styles';
+import config                               from '@mooglee/core/config';
+import { appWithTranslation, i18n }         from '@mooglee/core/lib/i18n';
+import createStore                          from '@mooglee/core/store/createStore';
+import envBoolean                           from '@mooglee/core/tools/envBoolean';
+import withRedux                            from 'next-redux-wrapper';
+import App                                  from 'next/app';
+import NProgress                            from 'nprogress';
+import React                                from 'react';
+import { Provider }                         from 'react-redux';
+import appExports                           from '../appExports';
+import { fetchAppSettings, setAppLanguage } from '../store/core.actions';
 
-const {theme, appActions} = appExports();
-const  { fetchAppSettings, updateAppLanguage } = appActions;
+
+const { theme } = appExports();
 
 
 
@@ -27,12 +28,12 @@ class _App extends App {
       props.lang = config.lang.default;
     }
 
-    ctx.store.dispatch(updateAppLanguage(props.lang));
+    ctx.store.dispatch(setAppLanguage(props.lang));
     props.pageProps = {
       ...(Component.getInitialProps ? await Component.getInitialProps({ ...ctx, lang: props.lang }) : {}),
     };
     // Store the app settings
-    if (config.api.fetchAppSettings === true && ctx.store.getState().app.syncSettings !== true) {
+    if (config.api.fetchAppSettings === true && ctx.store.getState().core.syncSettings !== true) {
       await ctx.store.dispatch(fetchAppSettings());
     }
 
