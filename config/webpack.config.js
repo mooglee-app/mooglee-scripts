@@ -1,7 +1,6 @@
 const getClientEnvironment = require('../server/env');
 const webpack              = require('webpack');
 const env                  = getClientEnvironment();
-const Visualizer           = require('webpack-visualizer-plugin');
 const envBoolean           = require('../tools/envBoolean');
 const paths                = require('../lib/paths');
 
@@ -70,7 +69,6 @@ module.exports = (nextWebpackConfig, { isServer, buildId, distDir, dev }) => {
     plugins: [
       ...nextWebpackConfig.plugins,
       new webpack.DefinePlugin(env.stringified),
-      new Visualizer(),
     ],
   });
 };
