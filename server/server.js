@@ -145,8 +145,8 @@ class App {
     this.server.use('/', express.static(paths.appPublic));
 
     if (config.lang.enabled) {
+      await nextI18next.initPromise
       this.server.use(nextI18NextMiddleware(nextI18next));
-      this.server.use('/locales', express.static(path.join(__dirname, '../', this.config.lang.localesPath)));
     }
 
     // Here we are adding new server listeners for the custom routes of the application. We are making this
