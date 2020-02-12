@@ -1,7 +1,6 @@
 import { withStyles } from '@material-ui/core/styles';
 import PropTypes      from 'prop-types';
 import React          from 'react';
-import Inspector      from 'react-inspector';
 import config         from '../config';
 import Head           from './Head';
 
@@ -33,7 +32,6 @@ const PageLayout = withStyles(styles)(function Layout(props) {
         pageData, // The pageData object received by the component
         children, // the page content
         backgroundColor, // The background color of the page
-        debug, // An object to display on the inspector tool (dev only)
         classes,
         ...rest
       } = props;
@@ -63,23 +61,6 @@ const PageLayout = withStyles(styles)(function Layout(props) {
       {Header}
       {children}
       {Footer}
-      {
-        // Optional inspector tool displayed at the bottom of the page
-        process.env.NODE_ENV === 'development' && typeof debug === 'object' &&
-        <div style={{
-          position: 'fixed',
-          bottom: 0,
-          left: 0,
-          width: '100%',
-          zIndex: 1000,
-        }}>
-          <Inspector
-            theme="chromeDark"
-            data={debug}
-            expandLevel={0}
-          />
-        </div>
-      }
     </div>
   );
 });
@@ -93,7 +74,6 @@ PageLayout.propTypes = {
   children: PropTypes.any.isRequired,
   classes: PropTypes.object,
   backgroundColor: PropTypes.string,
-  debug: PropTypes.object,
   Header: PropTypes.any,
   Footer: PropTypes.any,
   requiredPageData: PropTypes.bool,
