@@ -7,9 +7,8 @@ const withOffline   = require('next-offline');
 
 const nextConfig = withSass(/*@add-on-eject-begin({@add-on-eject-end*/
   //@remove-on-eject-begin
-  withTM(
+  withTM(['@mooglee/core'])(
     {
-      transpileModules: ['@mooglee', '@mooglee/core'],
       //@remove-on-eject-end
       cssModules: true,
       distDir: './build', // from client folder
