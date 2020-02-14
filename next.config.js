@@ -1,5 +1,6 @@
 const withSass      = require('@zeit/next-sass');
 const webpackConfig = require('./config/webpack.config');
+const workboxOpts   = require('./config/serviceWorker.config')
 //@remove-on-eject-begin
 const withTM        = require('next-transpile-modules');
 //@remove-on-eject-end
@@ -15,6 +16,7 @@ const nextConfig = withSass(/*@add-on-eject-begin({@add-on-eject-end*/
       dontAutoRegisterSw: true,
       generateInDevMode: true,
       useFileSystemPublicRoutes: false,
+      workboxOpts,
       cssLoaderOptions: {
         importLoaders: 1,
         localIdentName: '[local]',
