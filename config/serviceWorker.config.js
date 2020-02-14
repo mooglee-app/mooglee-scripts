@@ -9,7 +9,7 @@ const paths = require('../lib/paths');
 module.exports = {
   clientsClaim: true,
   skipWaiting: true,
-  swDest: paths.appStatic + '/service-worker.js',
+  swDest: paths.appPublic + '/service-worker.js',
   runtimeCaching: [
     {
       urlPattern: /(http[s]?:\/\/.*\.(?:png|jpg|jpeg|svg))/,
