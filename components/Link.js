@@ -53,7 +53,7 @@ function Link({
 
   // Check if a matching route has been found
   // if not, only show an error log on dev env
-  if (typeof to !== 'string') {
+  if (typeof to !== 'string' || !page) {
     if (process.env.NODE_ENV !== 'production') {
       console.error(`Link.js: No matching route has been found for '${to}'`);
     }
@@ -110,7 +110,7 @@ function Link({
   return (
     <NextLink
       href={{
-        pathname: removeUrlLastSlash(page),
+        pathname: removeUrlLastSlash(page || to),
         query,
       }}
       as={pathname + urlQuery}
