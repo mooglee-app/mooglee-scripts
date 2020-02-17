@@ -38,12 +38,20 @@ const PageLayout = withStyles(styles)(function Layout(props) {
 
   // Display an error if pageData is not defined or if it contains an error
   if (!pageData || pageData.error) {
-    const e = new Error(pageData.error);
-    e.code  = 'ENOENT';  // Triggers a 404
+    const error   = pageData.error || {};
+    const message = (process.env.NODE_ENV === 'development' && error.devMessage)
+      ? error.devMessage
+      : error.message;
+    const e       = new Error(message);
+    e.code        = 'ENOENT';  // Triggers a 404
 
     if (process.env.NODE_ENV === 'development') {
       console.warn(
         '\nNo `pageData` prop have been passed to the `PageLayout` component of your page.\nThis will end with a 404 redirection. The `pageLayout` prop is required.\n');
+
+      if (message) {
+        console.warn(message);
+      }
     }
 
     throw e;
