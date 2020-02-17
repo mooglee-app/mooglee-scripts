@@ -1,8 +1,6 @@
 import React         from 'react';
 import { fetchPage } from '../store/core.actions';
-import Socket from '../lib/socket'
 
-const socket = new Socket();
 
 function getErrorStatus(error = {}) {
   let statusCode = undefined;
@@ -46,19 +44,8 @@ export default (pageName = '', opts = {}) => ComposedComponent => {
     } else if (required) {
       try {
         pageData = await lazyGetPageData(pageName, props.store.dispatch);
-      } catch (err) {  // Store the status of the error somewhere
-        socket.setLang(props.lang);
-        pageData = {
-          error: {
-            code: getErrorStatus(err) || 404,
-            devMessage:
-              `The app fails to fetch pageData for this page.
-If you see this error, you have enabled the use of an API to fetch page data and the request has failed or the response is incorrect.
-Please check that your API is correctly returning data for the following endpoint:
-${socket.getPageUrl(pageName)}
-If you don't want to retrieve data for this page, you can pass a 'noPageData' parameter to the page wrapper.`
-          }
-        };
+      } catch (err) {
+        pageData = { error: { code: getErrorStatus(err) || 404 } }; // Store the status of the error somewhere
       }
     }
 
