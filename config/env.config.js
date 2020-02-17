@@ -7,8 +7,7 @@ module.exports = function (userConfig) {
   };
 
   if (userConfig.api.fetchAppSettings === true
-    || userConfig.api.fetchPagesData === true
-  || envBoolean(process.env.ENABLE_FAKE_API)) {
+    || userConfig.api.fetchPagesData === true) {
     envConfig.allowedVariables = {
       ...envConfig.allowedVariables,
       'API_HOST': { client: true, required: true },

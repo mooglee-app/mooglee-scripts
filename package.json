@@ -26,7 +26,6 @@
     "dotenv": "^8.2.0",
     "es7-object-polyfill": "1.0.1",
     "express": "^4.17.1",
-    "germaine": "^1.0.5",
     "next": "^9.2.1",
     "next-i18next": "^4.2.0",
     "next-offline": "^5.0.0",

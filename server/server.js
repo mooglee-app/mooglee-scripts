@@ -17,7 +17,6 @@ const nextI18next           = require('../lib/i18n');
 const getAppExports = require('../appExports');
 
 const config     = require('../config');
-const germaine   = require('germaine');
 const nextConfig = require('../next.config');
 const routes = getAppExports(true).routes;
 
@@ -26,7 +25,6 @@ class App {
     this.config             = props.config;
     this.dev                = process.env.NODE_ENV !== 'production';
     this.nextApp            = next({ dev: this.dev, dir: paths.app, conf: nextConfig });
-    this.enableFakeApi      = envBoolean(process.env.ENABLE_FAKE_API);
     this.enableHtpasswd     = envBoolean(process.env.ENABLE_HTPASSWD);
     this.protocol           = process.env.PROTOCOL || 'http';
     this.host               = process.env.HOST || this.config.server.baseUrl || 'localhost';
@@ -138,9 +136,6 @@ class App {
     // Enable cors on production
     this._enableCORS();
 
-    // Initialize fake-API
-    this._initFakeApi();
-
     // Listen to the public folder
     this.server.use('/', express.static(paths.appPublic));
 
@@ -209,18 +204,6 @@ class App {
         res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
         next();
       });
-    }
-  }
-
-
-  /**
-   * Initialize fake API
-   * @private
-   */
-  _initFakeApi() {
-    if (this.enableFakeApi !== false && this.server !== null) {
-      this.server.get('/fake-api', germaine(path.resolve(paths.app, './database.json')));
-      this.server.get('/fake-api/*', germaine(path.resolve(paths.app, './database.json')));
     }
   }
 
