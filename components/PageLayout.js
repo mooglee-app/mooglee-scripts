@@ -43,7 +43,7 @@ const PageLayout = withStyles(styles)(function Layout(props) {
 
     if (process.env.NODE_ENV === 'development') {
       console.warn(
-        '\nNo `pageData` prop have been passed to the `PageLayout` component of your page.\nThis will end with a 404 redirection. The `pageData` prop is required.\n');
+        '\nNo `pageData` prop have been passed to the `PageLayout` component of your page.\nThis will end with a 404 redirection. The `pageData` prop is required.');
     }
 
     throw e;
