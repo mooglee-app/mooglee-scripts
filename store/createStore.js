@@ -1,23 +1,22 @@
-import deepmerge                        from 'deepmerge';
-import { applyMiddleware, createStore } from 'redux';
-import { load, save }                   from 'redux-localstorage-simple';
-import { createLogger }                 from 'redux-logger';
-import thunk                            from 'redux-thunk';
-import getAppExports                    from '../appExports';
-import config                           from '../config';
-import Socket                           from '../lib/socket';
-import { combineReducers } from 'redux';
-import coreReducers from './core.reducers'
+import deepmerge                                         from 'deepmerge';
+import { applyMiddleware, combineReducers, createStore } from 'redux';
+import { load, save }                                    from 'redux-localstorage-simple';
+import { createLogger }                                  from 'redux-logger';
+import thunk                                             from 'redux-thunk';
+import getAppExports                                     from '../appExports';
+import config                                            from '../config';
+import Socket                                            from '../lib/socket';
+import coreReducers                                      from './core.reducers';
 
 // Items that be stored in the localStorage
-const { localStorageStates } = config.redux;
+const { localStorageStates, customMiddleware = [] } = config.redux;
 
 const { defaultStore, packageJson, reducers, routes } = getAppExports();
 
 
 const combinedReducers = combineReducers({
   ...reducers,
-  core: coreReducers
+  core: coreReducers,
 });
 
 const isServer = !process.browser;
@@ -42,7 +41,7 @@ const DEFAULT_STATE = {
   core: {
     lang: config.lang.default,
     routes,
-    pages: {}
+    pages: {},
   },
   ...defaultStore,
 };
@@ -66,6 +65,7 @@ export default (initialState = DEFAULT_STATE) => {
         save({ states: localStorageStates, namespace: packageJson.name }),
         thunk.withExtraArgument(socket),
         logger,
+        ...customMiddleware
       ),
     );
   }
