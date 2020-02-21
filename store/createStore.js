@@ -9,7 +9,7 @@ import Socket                                            from '../lib/socket';
 import coreReducers                                      from './core.reducers';
 
 // Items that be stored in the localStorage
-const { localStorageStates, customMiddleware = [] } = config.redux;
+const { localStorageStates, customMiddleware = [], logger = false } = config.redux;
 
 const { defaultStore, packageJson, reducers, routes } = getAppExports();
 
@@ -20,7 +20,7 @@ const combinedReducers = combineReducers({
 });
 
 const isServer = !process.browser;
-const logger   = process.env.NODE_ENV === 'production'
+const logger   = (process.env.NODE_ENV === 'production' || !logger)
   ? _store => _next => _action => _next(_action)
   : createLogger({
     collapsed: true,
