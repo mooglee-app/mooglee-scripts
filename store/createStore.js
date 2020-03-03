@@ -9,7 +9,7 @@ import Socket                                            from '../lib/socket';
 import coreReducers                                      from './core.reducers';
 
 // Items that be stored in the localStorage
-const { localStorageStates, customMiddleware = [], logger = false } = config.redux;
+const { localStorageStates, customMiddleware = [], logger : userLogger = false } = config.redux;
 
 const { defaultStore, packageJson, reducers, routes } = getAppExports();
 
