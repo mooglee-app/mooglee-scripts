@@ -20,7 +20,7 @@ const combinedReducers = combineReducers({
 });
 
 const isServer = !process.browser;
-const logger   = (process.env.NODE_ENV === 'production' || !logger)
+const logger   = (process.env.NODE_ENV === 'production' || !userLogger)
   ? _store => _next => _action => _next(_action)
   : createLogger({
     collapsed: true,
