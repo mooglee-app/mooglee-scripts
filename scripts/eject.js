@@ -56,15 +56,16 @@ inquirer
     name: 'shouldEject',
     message: 'Are you sure you want to eject? This action is permanent.',
     default: false,
+    when: process.env.NODE_ENV !== 'test'
   })
   .then(answer => {
-    if (!answer.shouldEject) {
+    if (!answer.shouldEject && process.env.NODE_ENV !== 'test') {
       console.log(cyan('Close one! Eject aborted.'));
       return;
     }
 
     const gitStatus = getGitStatus();
-    if (gitStatus) {
+    if (gitStatus && process.env.NODE_ENV !== 'test') {
       console.error(
         chalk.red(
           'This git repository has untracked files or uncommitted changes:',
