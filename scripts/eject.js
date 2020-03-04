@@ -261,7 +261,7 @@ inquirer
         console.log(green('Ejected successfully!'));
         console.log();
 
-        if (tryGitAdd(appPath)) {
+        if (process.env.NODE_ENV !== 'test' && tryGitAdd(appPath)) {
           console.log(cyan('Staged ejected files for commit.'));
           console.log();
         }
