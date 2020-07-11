@@ -1,5 +1,4 @@
 import * as actionTypes from './core.actions';
-import {createWrapper, HYDRATE} from 'next-redux-wrapper';
 
 
 function pushPage(state, action) {
@@ -25,8 +24,6 @@ function setAppSettings(state, action) {
 
 export default (state = {}, action = {}) => {
   switch (action.type) {
-    case HYDRATE:
-      return {...state, ...action.payload};
 
     case actionTypes.CORE_PUSH_PAGE:
       return pushPage(state, action);

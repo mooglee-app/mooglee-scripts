@@ -5,7 +5,7 @@ import config                               from '@mooglee/core/config';
 import { appWithTranslation, i18n }         from '@mooglee/core/lib/i18n';
 import createStore                          from '@mooglee/core/store/createStore';
 import envBoolean                           from '@mooglee/core/tools/envBoolean';
-import { createWrapper }                    from 'next-redux-wrapper';
+import withRedux                            from 'next-redux-wrapper';
 import App                                  from 'next/app';
 import NProgress                            from 'nprogress';
 import React                                from 'react';
@@ -13,8 +13,6 @@ import { Provider }                         from 'react-redux';
 import appExports                           from '../appExports';
 import { fetchAppSettings, setAppLanguage } from '../store/core.actions';
 
-
-const reduxWrapper = createWrapper(createStore);
 
 const { theme } = appExports();
 
@@ -161,7 +159,7 @@ class _App extends App {
   }
 };
 
-export default reduxWrapper(createStore)(
+export default withRedux(createStore)(
   config.lang.enabled
     ? appWithTranslation(_App)
     : _App,
