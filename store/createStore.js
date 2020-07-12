@@ -8,9 +8,9 @@ import config                                            from '../config';
 import coreReducers                                      from './core.reducers';
 
 // Items that be stored in the localStorage
-const { Socket,localStorageStates, customMiddleware = [], logger : userLogger = false } = config.redux;
+const { localStorageStates, customMiddleware = [], logger: userLogger = false } = config.redux;
 
-const { defaultStore, packageJson, reducers, routes } = getAppExports();
+const { Socket, defaultStore, packageJson, reducers, routes } = getAppExports();
 
 
 const combinedReducers = combineReducers({
@@ -64,7 +64,7 @@ export default (initialState = DEFAULT_STATE) => {
         save({ states: localStorageStates, namespace: packageJson.name }),
         thunk.withExtraArgument(socket),
         logger,
-        ...customMiddleware
+        ...customMiddleware,
       ),
     );
   }
