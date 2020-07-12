@@ -5,11 +5,10 @@ import { createLogger }                                  from 'redux-logger';
 import thunk                                             from 'redux-thunk';
 import getAppExports                                     from '../appExports';
 import config                                            from '../config';
-import Socket                                            from '../lib/socket';
 import coreReducers                                      from './core.reducers';
 
 // Items that be stored in the localStorage
-const { localStorageStates, customMiddleware = [], logger : userLogger = false } = config.redux;
+const { Socket,localStorageStates, customMiddleware = [], logger : userLogger = false } = config.redux;
 
 const { defaultStore, packageJson, reducers, routes } = getAppExports();
 

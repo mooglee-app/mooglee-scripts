@@ -18,6 +18,7 @@ module.exports = function (safe = false) {
       reducers: require('../../../store/reducers').default,
       theme: require('../../../theme').default,
       errorPage: require('../../../pages/_error').default,
+      Socket: require('../../../socket').default,
       ...cjsExports,
     };
 
