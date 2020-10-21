@@ -19,7 +19,7 @@ const { theme } = appExports();
 
 
 class _App extends App {
-  static async getInitialProps({ Component, ctx }) {
+  static async getInitialProps({ Component, ctx, customAppInitialPropsModifier }) {
     const props = {};
 
     props.lang = !ctx.req ? i18n.language : ctx.req.language;
@@ -39,6 +39,9 @@ class _App extends App {
 
     props.query = ctx.query || ctx.req.params;
 
+    if (typeof customAppInitialPropsModifier === 'function') {
+      await customAppInitialPropsModifier(props, ctx);
+    }
     return props;
   }
 
