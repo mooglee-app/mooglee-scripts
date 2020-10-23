@@ -1,5 +1,5 @@
 import { ServerStyleSheets }                from '@material-ui/styles';
-import Document, { Head, Main, NextScript } from 'next/document';
+import Document, { Html, Head, Main, NextScript } from 'next/document';
 import React                                from 'react';
 import appExports                           from '../appExports';
 import config                               from '../config';
@@ -15,16 +15,9 @@ class MyDocument extends Document {
     const lang = this.props.lang || config.lang.default;
 
     return (
-      <html lang={lang}>
+      <Html lang={lang}>
       <Head>
         <meta name="format-detection" content="telephone=no"/>
-        <meta
-          name="viewport"
-          content={
-            'user-scalable=0, initial-scale=1, ' +
-            'minimum-scale=1, width=device-width, height=device-height'
-          }
-        />
         {/* PWA primary color */}
         <meta name="theme-color" content={theme.palette.primary.main}/>
         <script src="/static/js/polyfills/js-object.js"/>
@@ -39,7 +32,7 @@ class MyDocument extends Document {
       <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500"/>
       <NextScript/>
       </body>
-      </html>
+      </Html>
     );
   }
 }

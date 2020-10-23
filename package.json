@@ -1,6 +1,6 @@
 {
   "name": "@mooglee/core",
-  "version": "1.1.43",
+  "version": "1.1.49",
   "description": "",
   "main": "/index.js",
   "scripts": {
@@ -25,7 +25,7 @@
     "dotenv": "^8.2.0",
     "es7-object-polyfill": "1.0.1",
     "express": "^4.17.1",
-    "next": "^9.2.2",
+    "next": "^9.5.5",
     "next-i18next": "^4.5.0",
     "next-offline": "^5.0.2",
     "next-redux-wrapper": "^5.0.0",
