@@ -7,7 +7,7 @@ import createStore                          from '@mooglee/core/store/createStor
 import envBoolean                           from '@mooglee/core/tools/envBoolean';
 import withRedux                            from 'next-redux-wrapper';
 import App                                  from 'next/app';
-import { Head }                             from 'next/document';
+import Head from 'next/head';
 import NProgress                            from 'nprogress';
 import React                                from 'react';
 import { Provider }                         from 'react-redux';
