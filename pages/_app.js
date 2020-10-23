@@ -29,6 +29,11 @@ class _App extends App {
     }
 
     ctx.store.dispatch(setAppLanguage(props.lang));
+
+    if (typeof customAppInitialPropsModifier === 'function') {
+      await customAppInitialPropsModifier(props, ctx);
+    }
+
     props.pageProps = {
       ...(Component.getInitialProps ? await Component.getInitialProps({ ...ctx, lang: props.lang }) : {}),
     };
@@ -39,9 +44,6 @@ class _App extends App {
 
     props.query = ctx.query || ctx.req.params;
 
-    if (typeof customAppInitialPropsModifier === 'function') {
-      await customAppInitialPropsModifier(props, ctx);
-    }
     return props;
   }
 
