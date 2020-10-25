@@ -126,7 +126,7 @@ class App {
     // Enable cors and compression on production mode
     if (this.dev === false) {
       this.server.use(cors());
-      this.server.use(compression());
+     // this.server.use(compression()); This is actually causing a bug on production and do not seems to be necessary while next-js has a built-in tool for that
     }
 
     if (envBoolean(process.env.FORCE_SSL)) {
