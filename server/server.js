@@ -14,11 +14,13 @@ const chalk                 = require('chalk');
 const envBoolean            = require('../tools/envBoolean');
 const nextI18NextMiddleware = require('next-i18next/middleware').default;
 const nextI18next           = require('../lib/i18n');
-const getAppExports = require('../appExports');
+const getAppExports         = require('../appExports');
 
 const config     = require('../config');
 const nextConfig = require('../next.config');
-const routes = getAppExports(true).routes;
+const routes     = getAppExports(true).routes;
+
+
 
 class App {
   constructor(props) {
@@ -126,7 +128,7 @@ class App {
     // Enable cors and compression on production mode
     if (this.dev === false) {
       this.server.use(cors());
-     // this.server.use(compression()); This is actually causing a bug on production and do not seems to be necessary while next-js has a built-in tool for that
+      // this.server.use(compression()); This is actually causing a bug on production and do not seems to be necessary while next-js has a built-in tool for that
     }
 
     if (envBoolean(process.env.FORCE_SSL)) {
@@ -193,6 +195,7 @@ class App {
     return true;
   }
 
+
   /**
    * Enable CORS protection on production
    * @private
@@ -232,6 +235,11 @@ class App {
         const queryParams    = {};
         const shouldBeCached = (this.enableSSRCaching === true && routeConfig.neverCache !== true);
 
+        // This can append when an error occurred
+        if (res.headersSent === true) {
+          return;
+        }
+
         if (req.url && req.url.length > 1 && req.url.substr(req.url.length - 1) === '/') {
           res.redirect(301, removeUrlLastSlash(req.url));
         }
@@ -253,13 +261,12 @@ class App {
           return;
         }
 
-        // This can append when an error occurred
-        if (res.headersSent === true) {
-          return;
-        }
-
         try {
           const html = await this.nextApp.renderToHTML(req, res, routeConfig.page, queryParams);
+
+          if (res.headersSent) {
+            return;
+          }
 
           // Cache is disabled or something is wrong with the request, let's skip the cache
           if (!shouldBeCached || res.statusCode !== 200) {
@@ -311,6 +318,10 @@ class App {
     this.server.get('*', (req, res) => {
 
       this._htpasswdMiddleware(req, res);
+
+      if (res.headersSent) {
+        return;
+      }
 
       // Serve the service-worker
 
