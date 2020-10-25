@@ -273,7 +273,9 @@ class App {
           res.setHeader('x-cache', 'MISS');
           res.send(html);
         } catch (err) {
-          this.nextApp.renderError(err, req, res, routeConfig.page, queryParams);
+          if (!res.headersSent) {
+            return await this.nextApp.renderError(err, req, res, routeConfig.page, queryParams);
+          }
         }
       },
     );
