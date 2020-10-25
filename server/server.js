@@ -337,7 +337,7 @@ class App {
    * @private
    */
   _htpasswdMiddleware(request, response, next) {
-    if (this.enableHtpasswd === true) {
+    if (this.enableHtpasswd === true && !response.headersSent) {
       let user = auth(request);
 
       if (!user || user.name !== process.env.HTPASSWD_USER || user.pass !== process.env.HTPASSWD_PASSWORD) {
