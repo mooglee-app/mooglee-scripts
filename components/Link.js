@@ -45,7 +45,7 @@ function Link({
       .split('/')[0];
     isActive      = (router.route.indexOf(`/${segment}`) === 0);
   } else {
-    isActive = (router.route.indexOf(to) === 0);
+    isActive = router.route === to;
   }
 
   // Find a matching route in the route.js config file
