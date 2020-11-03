@@ -40,9 +40,9 @@ function Link({
   if (router.route === '/index' && to === '/') {
     isActive = true;
   } else if (checkSubActive) {
-    const segment = to
-      .split('/')[0];
-    isActive      = router.route === segment;
+    const segment = router.route
+      .split('/')[1];
+    isActive      = to === `/${segment}`;
   } else {
     isActive = router.route === to;
   }
