@@ -136,7 +136,7 @@ class _App extends App {
             name="viewport"
             content={
               'user-scalable=0, initial-scale=1, ' +
-              'minimum-scale=1, width=device-width, height=device-height'
+              'width=device-width, height=device-height'
             }
           />
         </Head>

@@ -41,9 +41,8 @@ function Link({
     isActive = true;
   } else if (checkSubActive) {
     const segment = to
-      .slice(1)
       .split('/')[0];
-    isActive      = (router.route.indexOf(`/${segment}`) === 0);
+    isActive      = router.route === segment;
   } else {
     isActive = router.route === to;
   }
