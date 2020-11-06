@@ -44,7 +44,6 @@ function Link({
       .split('/')[1];
     isActive      = to === `/${segment}`;
   } else {
-    console.log(router, router.route, to);
     isActive = router.asPath.split('?')[0] === to;
   }
 
