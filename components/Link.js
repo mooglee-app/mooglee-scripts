@@ -40,11 +40,12 @@ function Link({
   if (router.route === '/index' && to === '/') {
     isActive = true;
   } else if (checkSubActive) {
-    const segment = router.route
+    const segment = router.asPath.split('?')[0]
       .split('/')[1];
     isActive      = to === `/${segment}`;
   } else {
-    isActive = router.route === to;
+    console.log(router, router.route, to);
+    isActive = router.asPath.split('?')[0] === to;
   }
 
   // Find a matching route in the route.js config file
