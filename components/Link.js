@@ -12,6 +12,7 @@ import wrapper              from '../wrappers/componentWrapper';
 
 const { routes } = getAppExports();
 
+
 function Link({
                 activeClassName,
                 checkSubActive,
@@ -34,17 +35,20 @@ function Link({
               }) {
 
 
-  const router = useRouter();
+  const router    = useRouter();
+  const cleanPath = router.asPath
+    .split('#')[0]
+    .split('?')[0]
 
   let isActive = false;
   if (router.route === '/index' && to === '/') {
     isActive = true;
   } else if (checkSubActive) {
-    const segment = router.asPath.split('?')[0]
+    const segment = cleanPath
       .split('/')[1];
     isActive      = to === `/${segment}`;
   } else {
-    isActive = router.asPath.split('?')[0] === to;
+    isActive = cleanPath === to;
   }
 
   // Find a matching route in the route.js config file
@@ -119,6 +123,7 @@ function Link({
     </NextLink>
   );
 }
+
 
 Link.propTypes = {
 
