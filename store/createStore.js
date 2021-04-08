@@ -45,7 +45,8 @@ const DEFAULT_STATE = {
   ...defaultStore,
 };
 
-export default (initialState = DEFAULT_STATE) => {
+
+function createStore(initialState = DEFAULT_STATE) {
 
   // We do not want middlewares like redux-logger to get
   // fired on the server side
@@ -68,4 +69,7 @@ export default (initialState = DEFAULT_STATE) => {
       ),
     );
   }
-};
+}
+
+
+export default createStore;
