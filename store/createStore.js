@@ -54,8 +54,8 @@ export default (initialState = DEFAULT_STATE) => {
     return createStore(combinedReducers, initialState, applyMiddleware(thunk.withExtraArgument(socket)));
   } else {
     initialState = deepmerge(
-      load({ states: localStorageStates, namespace: packageJson.name }),
       initialState,
+      load({ states: localStorageStates, namespace: packageJson.name }),
     );
     return createStore(
       combinedReducers,
