@@ -1,11 +1,11 @@
-import deepmerge                                         from 'deepmerge';
-import { applyMiddleware, combineReducers, createStore } from 'redux';
-import { load, save }                                    from 'redux-localstorage-simple';
-import { createLogger }                                  from 'redux-logger';
-import thunk                                             from 'redux-thunk';
-import getAppExports                                     from '../appExports';
-import config                                            from '../config';
-import coreReducers                                      from './core.reducers';
+import deepmerge                                                         from 'deepmerge';
+import { applyMiddleware, combineReducers, createStore as _createStore } from 'redux';
+import { load, save }                                                    from 'redux-localstorage-simple';
+import { createLogger }                                                  from 'redux-logger';
+import thunk                                                             from 'redux-thunk';
+import getAppExports                                                     from '../appExports';
+import config                                                            from '../config';
+import coreReducers                                                      from './core.reducers';
 
 // Items that be stored in the localStorage
 const { localStorageStates, customMiddleware = [], logger: userLogger = false } = config.redux;
@@ -52,13 +52,13 @@ function createStore(initialState = DEFAULT_STATE) {
   // fired on the server side
 
   if (isServer) {
-    return createStore(combinedReducers, initialState, applyMiddleware(thunk.withExtraArgument(socket)));
+    return _createStore(combinedReducers, initialState, applyMiddleware(thunk.withExtraArgument(socket)));
   } else {
     initialState = deepmerge(
       initialState,
       load({ states: localStorageStates, namespace: packageJson.name }),
     );
-    return createStore(
+    return _createStore(
       combinedReducers,
       initialState,
       applyMiddleware(
