@@ -24,7 +24,7 @@ const lazyGetPageData = (pageName, dispatch) => new Promise((resolve, reject) =>
 });
 
 // This is a HOC that can be used with all the app pages.
-// Its goal is simply to make a request to the API when the Component getInitialProps is called
+// Its goal is simply to make a request to the API when the Component getServerSideProps is called
 // an retrieve specific data for the page. these data will be accessible under the page prop 'pageData'
 
 
@@ -34,7 +34,7 @@ const withPageData = (pageName = '', opts = {}) => ComposedComponent => {
 
   const Extended = (props) => React.createElement(ComposedComponent, props);
 
-  Extended.getInitialProps = async (props = {}) => {
+  Extended.getServerSideProps = async (props = {}) => {
 
     // Resolve page data
     let pageData = {};
@@ -50,12 +50,14 @@ const withPageData = (pageName = '', opts = {}) => ComposedComponent => {
       }
     }
 
-    // Run page getInitialProps with store and isServer
-    const initialProps = ComposedComponent.getInitialProps
-      ? await ComposedComponent.getInitialProps(Object.assign({}, props, { pageData }))
+    // Run page getServerSideProps with store and isServer
+    const initialProps = ComposedComponent.getServerSideProps
+      ? await ComposedComponent.getServerSideProps(Object.assign({}, props, { pageData }))
       : {};
 
-    return Object.assign({}, initialProps, { pageData, pageName });
+    return {
+      props: Object.assign({}, initialProps, { pageData, pageName })
+    };
   };
 
   return Extended;

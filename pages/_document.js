@@ -39,26 +39,26 @@ class MyDocument extends Document {
 
 
 
-MyDocument.getInitialProps = async ctx => {
+MyDocument.getServerSideProps = async ctx => {
   // Resolution order
   //
   // On the server:
-  // 1. app.getInitialProps
-  // 2. page.getInitialProps
-  // 3. document.getInitialProps
+  // 1. app.getServerSideProps
+  // 2. page.getServerSideProps
+  // 3. document.getServerSideProps
   // 4. app.render
   // 5. page.render
   // 6. document.render
   //
   // On the server with error:
-  // 1. document.getInitialProps
+  // 1. document.getServerSideProps
   // 2. app.render
   // 3. page.render
   // 4. document.render
   //
   // On the client
-  // 1. app.getInitialProps
-  // 2. page.getInitialProps
+  // 1. app.getServerSideProps
+  // 2. page.getServerSideProps
   // 3. app.render
   // 4. page.render
 
@@ -71,18 +71,20 @@ MyDocument.getInitialProps = async ctx => {
       enhanceApp: App => props => sheets.collect(<App {...props} />),
     });
 
-  const initialProps = await Document.getInitialProps(ctx);
+  const initialProps = await Document.getServerSideProps(ctx);
 
   return {
-    ...initialProps,
-    lang: !ctx.req ? i18n.language : ctx.req.language,
-    // Styles fragment is rendered after the app and page rendering finish.
-    styles: [
-      <React.Fragment key="styles">
-        {initialProps.styles}
-        {sheets.getStyleElement()}
-      </React.Fragment>,
-    ],
+    props: {
+      ...initialProps,
+      lang: !ctx.req ? i18n.language : ctx.req.language,
+      // Styles fragment is rendered after the app and page rendering finish.
+      styles: [
+        <React.Fragment key="styles">
+          {initialProps.styles}
+          {sheets.getStyleElement()}
+        </React.Fragment>,
+      ],
+    }
   };
 };
 
