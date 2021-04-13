@@ -1,10 +1,10 @@
-import { withStyles }      from '@material-ui/core/styles';
-import React               from 'react';
-import { connect }         from 'react-redux';
-import { compose }         from 'recompose';
-import config              from '../config';
-import withPageData        from '../tools/withPageData';
-import withTranslation     from '../tools/withTranslation';
+import { withStyles }  from '@material-ui/core/styles';
+import React           from 'react';
+import { connect }     from 'react-redux';
+import { compose }     from 'recompose';
+import config          from '../config';
+import withPageData    from '../tools/withPageData';
+import withTranslation from '../tools/withTranslation';
 
 
 /**
@@ -23,7 +23,7 @@ import withTranslation     from '../tools/withTranslation';
  * @returns {*}
  */
 
-export default (Component, {
+const pageWrapper = (Component, {
   name,
   namespaces = [],
   mapStateToProps = null,
@@ -36,8 +36,10 @@ export default (Component, {
     withPageData(name, { required: config.api.fetchPagesData ? !noPageData : false }),
     connect(mapStateToProps),
     withStyles(styles, { withTheme: withTheme }),
-    withTranslation(name, namespaces, config)
+    withTranslation(name, namespaces, config),
   ];
 
   return compose(...args)(Component);
 };
+
+export default pageWrapper;

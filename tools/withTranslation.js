@@ -1,8 +1,7 @@
-import React               from 'react';
-import { withTranslation } from '../lib/i18n';
+import React from 'react';
 
 
-export default (pageName = '', namespaces, config) => ComposedComponent => {
+const withTranslation = (pageName = '', namespaces, config) => ComposedComponent => {
   if (config.lang.enabled) {
     const _namespaces = config.lang.namespaces.includes(pageName) ? [pageName, ...namespaces] : namespaces;
 
@@ -24,3 +23,5 @@ export default (pageName = '', namespaces, config) => ComposedComponent => {
   }
   return ComposedComponent;
 };
+
+export default withTranslation;

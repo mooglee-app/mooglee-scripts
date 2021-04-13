@@ -13,6 +13,7 @@ function getErrorStatus(error = {}) {
   return statusCode;
 }
 
+
 const lazyGetPageData = (pageName, dispatch) => new Promise((resolve, reject) => {
   dispatch(fetchPage(pageName, false, (res, err) => {
     if (res && !err) return resolve(res);
@@ -27,7 +28,7 @@ const lazyGetPageData = (pageName, dispatch) => new Promise((resolve, reject) =>
 // an retrieve specific data for the page. these data will be accessible under the page prop 'pageData'
 
 
-export default (pageName = '', opts = {}) => ComposedComponent => {
+const withPageData = (pageName = '', opts = {}) => ComposedComponent => {
 
   const required = Boolean(opts.required);
 
@@ -59,3 +60,5 @@ export default (pageName = '', opts = {}) => ComposedComponent => {
 
   return Extended;
 };
+
+export default withPageData;

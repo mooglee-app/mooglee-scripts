@@ -24,7 +24,7 @@ import { withTranslation }              from '../lib/i18n';
  * @param {array} namespaces: custom namespaces that can be added to i18next
  * @returns {*}
  */
-export default (Component, {
+const componentWrapper = (Component, {
   mapStateToProps = null,
   styles = {},
   isTranslatable = false,
@@ -45,3 +45,5 @@ export default (Component, {
 
   return compose(...args)(Component);
 };
+
+export default componentWrapper;
