@@ -38,34 +38,8 @@ module.exports = (nextWebpackConfig, { isServer, buildId, distDir, dev }) => {
     }
   });
 
-
-  nextWebpackConfig.plugins = nextWebpackConfig.plugins.map(plugin => {
-    if (
-      plugin.constructor.name === 'CommonsChunkPlugin' &&
-      plugin.minChunks != null
-    ) {
-      const defaultMinChunks = plugin.minChunks;
-      plugin.minChunks       = (module, count) => {
-        if (module.resource && module.resource.match(/\.(sass|scss|css)$/)) {
-          return true;
-        }
-        return defaultMinChunks(module, count);
-      };
-    }
-    return plugin;
-  });
-
   return Object.assign({}, nextWebpackConfig, {
     devServer: { quiet: true, noInfo: true, stats: 'errors-only' },
-    module: {
-      rules: [
-        ...nextWebpackConfig.module.rules,
-        {
-          test: /\.css$/,
-          use: ['style-loader', 'css-loader', 'postcss-loader'],
-        },
-      ],
-    },
     plugins: [
       ...nextWebpackConfig.plugins,
       new webpack.DefinePlugin(env.stringified),
