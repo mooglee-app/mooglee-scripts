@@ -4,21 +4,13 @@ const workboxOpts   = require('./config/serviceWorker.config')
 const withTM        = require('next-transpile-modules');
 //@remove-on-eject-end
 const withOffline   = require('next-offline');
-const regexEqual    = (x, y) => {
-  return (
-    x instanceof RegExp &&
-    y instanceof RegExp &&
-    x.source === y.source &&
-    x.global === y.global &&
-    x.ignoreCase === y.ignoreCase &&
-    x.multiline === y.multiline
-  );
-};
+
 const nextConfig = /*@add-on-eject-begin({@add-on-eject-end*/
   //@remove-on-eject-begin
   withTM(['@mooglee/core'])(
     {
       //@remove-on-eject-end
+      future: { webpack5: true },
       distDir: './build', // from client folder
       dontAutoRegisterSw: true,
       generateInDevMode: true,
