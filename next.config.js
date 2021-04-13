@@ -20,6 +20,7 @@ const nextConfig = withSass(/*@add-on-eject-begin({@add-on-eject-end*/
   withTM(['@mooglee/core'])(
     {
       //@remove-on-eject-end
+      future: { webpack5: true },
       cssModules: true,
       distDir: './build', // from client folder
       dontAutoRegisterSw: true,
