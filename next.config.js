@@ -10,7 +10,6 @@ const nextConfig = /*@add-on-eject-begin({@add-on-eject-end*/
   withTM(['@mooglee/core'])(
     {
       //@remove-on-eject-end
-      future: { webpack5: true },
       distDir: './build', // from client folder
       dontAutoRegisterSw: true,
       generateInDevMode: true,
