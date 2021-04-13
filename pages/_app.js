@@ -12,7 +12,7 @@ import NProgress                            from 'nprogress';
 import React                                from 'react';
 import { Provider }                         from 'react-redux';
 import appExports                           from '../appExports';
-import { fetchAppSettings, setAppLanguage } from '../store/core.actions';
+import { setAppLanguage } from '../store/core.actions';
 
 
 const { theme } = appExports();
@@ -38,10 +38,6 @@ class _App extends App {
     props.pageProps = {
       ...(Component.getInitialProps ? await Component.getInitialProps({ ...ctx, lang: props.lang }) : {}),
     };
-    // Store the app settings
-    if (config.api.fetchAppSettings === true && ctx.store.getState().core.syncSettings !== true) {
-      await ctx.store.dispatch(fetchAppSettings());
-    }
 
     props.query = ctx.query || ctx.req.params;
 

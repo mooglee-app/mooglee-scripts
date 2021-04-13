@@ -9,7 +9,7 @@ const withTranslation = (pageName = '', namespaces, config) => ComposedComponent
     const Extended           = (props) => React.createElement(ComposedComponent, props);
     Extended.getInitialProps = async (props = {}) => {
       const initialProps = ComposedComponent.getInitialProps
-        ? await ComposedComponent.getInitialProps(Object.assign({}, props /*{ pageData }*/))
+        ? await ComposedComponent.getInitialProps(Object.assign({}, props))
         : {};
 
       return Object.assign(

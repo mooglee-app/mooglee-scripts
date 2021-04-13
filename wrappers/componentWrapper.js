@@ -10,7 +10,6 @@ import { withTranslation }              from '../lib/i18n';
 /**
  * This is a component wrapper that does the following things:
  * - connect the component to redux
- * - inject pageData after having fetching it from the API
  * - Add MUI styles
  * @param Component
  * @param {function} mapStateToProps: you know what it is

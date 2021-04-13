@@ -1,7 +1,6 @@
 import { withStyles } from '@material-ui/core/styles';
 import PropTypes      from 'prop-types';
 import React          from 'react';
-import config         from '../config';
 import Head           from './Head';
 
 
@@ -36,24 +35,9 @@ const PageLayout = withStyles(styles)(function Layout(props) {
         ...rest
       } = props;
 
-  // Display an error if pageData is not defined or if it contains an error
-  if (!pageData || pageData.error) {
-    const message = '\nNo `pageData` prop have been passed to the `PageLayout` component of your page.\nThis will end with a 404 redirection. The `pageData` prop is required.';
-    const e = new Error(message);
-    e.code  = 'ENOENT';  // Triggers a 404
-
-    throw e;
-  }
-
-  pageData = pageData || {
-    title: config.seo.defaultPagesTitle,
-  };
-
-  Object.assign(pageData || {}, rest);
-
   return (
-    <div className={`${classes.root} page-${pageData.title}`} style={backgroundColor ? { backgroundColor } : {}}>
-      <Head {...pageData}/>
+    <div className={`${classes.root} ${!!pageData?.title && `page-${pageData.title}`}`} style={backgroundColor ? { backgroundColor } : {}}>
+      <Head {...pageData} {...rest}/>
       {Header}
       {children}
       {Footer}
@@ -62,7 +46,7 @@ const PageLayout = withStyles(styles)(function Layout(props) {
 });
 
 PageLayout.defaultProps = {
-  pageData: config.api.fetchPagesData ? undefined : {},
+  pageData: {},
 };
 
 PageLayout.propTypes = {

@@ -7,5 +7,4 @@ module.exports = {
   findClosestParentEl: require('./findClosestParentEl'),
   getFormattedTimeFromMinutes: require('./getFormatedTimeFromMinutes'),
   removeUrlLastSlash: require('./removeUrlLastSlash'),
-  withPageData: require('./withPageData'),
 }
