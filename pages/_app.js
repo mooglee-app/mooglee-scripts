@@ -20,7 +20,7 @@ const { theme } = appExports();
 
 
 class _App extends App {
-  static async getServerSideProps({ Component, ctx, customAppInitialPropsModifier }) {
+  static async getInitialProps({ Component, ctx, customAppInitialPropsModifier }) {
     const props = {};
 
     props.lang = !ctx.req ? i18n.language : ctx.req.language;
@@ -36,7 +36,7 @@ class _App extends App {
     }
 
     props.pageProps = {
-      ...(Component.getServerSideProps ? await Component.getServerSideProps({ ...ctx, lang: props.lang }) : {}),
+      ...(Component.getInitialProps ? await Component.getInitialProps({ ...ctx, lang: props.lang }) : {}),
     };
     // Store the app settings
     if (config.api.fetchAppSettings === true && ctx.store.getState().core.syncSettings !== true) {
@@ -45,7 +45,7 @@ class _App extends App {
 
     props.query = ctx.query || ctx.req.params;
 
-    return { props };
+    return props;
   }
 
 
