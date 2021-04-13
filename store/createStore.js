@@ -39,7 +39,6 @@ const socket = new Socket();
 const DEFAULT_STATE = {
   core: {
     lang: config.lang.default,
-    routes,
     pages: {},
   },
   ...defaultStore,
