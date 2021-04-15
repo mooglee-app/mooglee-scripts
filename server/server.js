@@ -1,13 +1,10 @@
 const express               = require('express');
 const next                  = require('next');
-const compression           = require('compression');
 const cors                  = require('cors');
-const { parse }             = require('url');
 const checkRequiredFiles    = require('react-dev-utils/checkRequiredFiles');
 const paths                 = require('../lib/paths');
 const { choosePort }        = require('react-dev-utils/WebpackDevServerUtils');
 const auth                  = require('basic-auth');
-const path                  = require('path');
 const LRUCache              = require('lru-cache');
 const removeUrlLastSlash    = require('../tools/removeUrlLastSlash');
 const chalk                 = require('chalk');
