@@ -4,6 +4,8 @@ const workboxOpts   = require('./config/serviceWorker.config')
 const withTM        = require('next-transpile-modules');
 //@remove-on-eject-end
 const withOffline   = require('next-offline');
+const getAppExports = require('./appExports');
+const { i18n }      = getAppExports(true).config.lang;
 
 const nextConfig = /*@add-on-eject-begin({@add-on-eject-end*/
   //@remove-on-eject-begin
@@ -15,6 +17,7 @@ const nextConfig = /*@add-on-eject-begin({@add-on-eject-end*/
       generateInDevMode: true,
       useFileSystemPublicRoutes: false,
       workboxOpts,
+      i18n,
 
       webpack: (config, { dev, isServer, buildId, config: { distDir } }) => {
         return webpackConfig(config, { isServer, buildId, distDir, dev });
