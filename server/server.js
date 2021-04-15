@@ -9,6 +9,8 @@ const LRUCache              = require('lru-cache');
 const removeUrlLastSlash    = require('../tools/removeUrlLastSlash');
 const chalk                 = require('chalk');
 const envBoolean            = require('../tools/envBoolean');
+const nextI18NextMiddleware = require('next-i18next/middleware').default;
+const nextI18next           = require('../lib/i18n');
 const getAppExports         = require('../appExports');
 
 const config     = require('../config');
@@ -135,6 +137,11 @@ class App {
 
     // Listen to the public folder
     this.server.use('/', express.static(paths.appPublic));
+
+    if (config.lang.enabled) {
+      await nextI18next.initPromise
+      this.server.use(nextI18NextMiddleware(nextI18next));
+    }
 
     // Here we are adding new server listeners for the custom routes of the application. We are making this
     // differently depending on if the route translation has been enable or not

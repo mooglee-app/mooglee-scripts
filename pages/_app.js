@@ -1,29 +1,21 @@
-import CssBaseline                from '@material-ui/core/CssBaseline';
-import Hidden                     from '@material-ui/core/Hidden';
-import { ThemeProvider }          from '@material-ui/styles';
-import config                     from '@mooglee/core/config';
-import createStore                from '@mooglee/core/store/createStore';
-import envBoolean                 from '@mooglee/core/tools/envBoolean';
-import { appWithTranslation }     from 'next-i18next';
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
-import withRedux                  from 'next-redux-wrapper';
-import App                        from 'next/app';
-import Head                       from 'next/head';
-import NProgress                  from 'nprogress';
-import React                      from 'react';
-import { Provider }               from 'react-redux';
-import appExports                 from '../appExports';
-import { setAppLanguage }         from '../store/core.actions';
+import CssBaseline                          from '@material-ui/core/CssBaseline';
+import Hidden                               from '@material-ui/core/Hidden';
+import { ThemeProvider }                    from '@material-ui/styles';
+import config                               from '@mooglee/core/config';
+import { appWithTranslation, i18n }         from '@mooglee/core/lib/i18n';
+import createStore                          from '@mooglee/core/store/createStore';
+import envBoolean                           from '@mooglee/core/tools/envBoolean';
+import withRedux                            from 'next-redux-wrapper';
+import App                                  from 'next/app';
+import Head from 'next/head';
+import NProgress                            from 'nprogress';
+import React                                from 'react';
+import { Provider }                         from 'react-redux';
+import appExports                           from '../appExports';
+import { setAppLanguage } from '../store/core.actions';
 
 
-const { theme, lang: i18nConfig } = appExports();
-
-
-export const getStaticProps = async ({ locale }) => ({
-  props: {
-    ...await serverSideTranslations(locale, ['common', 'footer']),
-  },
-});
+const { theme } = appExports();
 
 
 
@@ -182,6 +174,6 @@ class _App extends App {
 
 export default withRedux(createStore)(
   config.lang.enabled
-    ? appWithTranslation(_App, i18nConfig)
+    ? appWithTranslation(_App)
     : _App,
 );

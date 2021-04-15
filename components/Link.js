@@ -1,13 +1,13 @@
-import MUILink            from '@material-ui/core/Link';
-import classNames         from 'classnames';
-import NextLink           from 'next/link';
-import { useRouter }      from 'next/router';
-import PropTypes          from 'prop-types';
-import React              from 'react';
-import getAppExports      from '../appExports';
-import config             from '../config';
-import removeUrlLastSlash from '../tools/removeUrlLastSlash';
-import wrapper            from '../wrappers/componentWrapper';
+import MUILink              from '@material-ui/core/Link';
+import classNames           from 'classnames';
+import { useRouter }        from 'next/router';
+import PropTypes            from 'prop-types';
+import React                from 'react';
+import getAppExports        from '../appExports';
+import config               from '../config';
+import { Link as NextLink } from '../lib/i18n';
+import removeUrlLastSlash   from '../tools/removeUrlLastSlash';
+import wrapper              from '../wrappers/componentWrapper';
 
 
 const { routes } = getAppExports();
@@ -38,7 +38,7 @@ function Link({
   const router    = useRouter();
   const cleanPath = router.asPath
     .split('#')[0]
-    .split('?')[0];
+    .split('?')[0]
 
   let isActive = false;
   if (router.route === '/index' && to === '/') {

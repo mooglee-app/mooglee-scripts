@@ -22,6 +22,7 @@ import withTranslation from '../tools/withTranslation';
 
 const pageWrapper = (Component, {
   name,
+  namespaces = [],
   mapStateToProps = null,
   styles = {},
   withTheme = false,
@@ -30,6 +31,7 @@ const pageWrapper = (Component, {
   const args = [
     connect(mapStateToProps),
     withStyles(styles, { withTheme: withTheme }),
+    withTranslation(name, namespaces, config),
   ];
 
   return compose(...args)(Component);

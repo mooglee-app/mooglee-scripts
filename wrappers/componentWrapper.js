@@ -4,6 +4,7 @@ import { withRouter as withNextRouter } from 'next/router';
 import { connect }                      from 'react-redux';
 import { compose }                      from 'recompose';
 import config                           from '../config';
+import { withTranslation }              from '../lib/i18n';
 
 
 /**
@@ -19,21 +20,25 @@ import config                           from '../config';
  * @param {boolean} withTheme: defines if the theme should be injected to the component's props
  * @param {boolean} withWidth: defines if the current screen size breakpoint should be injected to the component's props
  * @param {boolean} withRouter: inject the pathname, query and asPath into the component
+ * @param {array} namespaces: custom namespaces that can be added to i18next
  * @returns {*}
  */
 const componentWrapper = (Component, {
   mapStateToProps = null,
   styles = {},
+  isTranslatable = false,
   isConnected = false,
   hasStyles = true,
   withTheme = false,
   withWidth = false,
   withRouter = false,
+  namespaces = [],
 } = {}) => {
   const args = [
     ...((isConnected || typeof mapStateToProps === 'function') ? [connect(mapStateToProps)] : []),
     ...((hasStyles || typeof styles === 'object') ? [withStyles(styles, { withTheme: withTheme })] : []),
     ...(withWidth ? [withUIWidth({ initialWidth: 'lg', withTheme })] : []),
+    ...((config.lang.enabled && isTranslatable) ? [withTranslation([config.lang.defaultNamespace, ...namespaces])] : []),
     ...(withRouter ? [withNextRouter] : []),
   ];
 
