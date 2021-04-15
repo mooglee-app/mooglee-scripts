@@ -1,7 +1,6 @@
 import CssBaseline            from '@material-ui/core/CssBaseline';
 import Hidden                 from '@material-ui/core/Hidden';
 import { ThemeProvider }      from '@material-ui/styles';
-import config                 from '@mooglee/core/config';
 import createStore            from '@mooglee/core/store/createStore';
 import envBoolean             from '@mooglee/core/tools/envBoolean';
 import { appWithTranslation } from 'next-i18next';
@@ -11,8 +10,8 @@ import Head                   from 'next/head';
 import NProgress              from 'nprogress';
 import React                  from 'react';
 import { Provider }           from 'react-redux';
+import { compose }            from 'recompose';
 import appExports             from '../appExports';
-import { setAppLanguage }     from '../store/core.actions';
 
 
 const { nextI18nextConfig } = appExports(true);
@@ -168,8 +167,7 @@ class _App extends App {
   }
 };
 
-export default withRedux(createStore)(
-  config.lang.enabled
-    ? appWithTranslation(_App, nextI18nextConfig)
-    : _App,
-);
+const withTranslation = WrappedApp => appWithTranslation(WrappedApp, nextI18nextConfig);
+
+
+export default compose(withTranslation, withRedux(createStore))(_App);

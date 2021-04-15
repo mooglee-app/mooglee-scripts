@@ -1,19 +1,20 @@
-const express               = require('express');
-const next                  = require('next');
-const cors                  = require('cors');
-const checkRequiredFiles    = require('react-dev-utils/checkRequiredFiles');
-const paths                 = require('../lib/paths');
-const { choosePort }        = require('react-dev-utils/WebpackDevServerUtils');
-const auth                  = require('basic-auth');
-const LRUCache              = require('lru-cache');
-const removeUrlLastSlash    = require('../tools/removeUrlLastSlash');
-const chalk                 = require('chalk');
-const envBoolean            = require('../tools/envBoolean');
-const getAppExports         = require('../appExports');
+const express            = require('express');
+const next               = require('next');
+const cors               = require('cors');
+const checkRequiredFiles = require('react-dev-utils/checkRequiredFiles');
+const paths              = require('../lib/paths');
+const { choosePort }     = require('react-dev-utils/WebpackDevServerUtils');
+const auth               = require('basic-auth');
+const LRUCache           = require('lru-cache');
+const removeUrlLastSlash = require('../tools/removeUrlLastSlash');
+const chalk              = require('chalk');
+const envBoolean         = require('../tools/envBoolean');
+const getAppExports      = require('../appExports');
 
-const config     = require('../config');
-const nextConfig = require('../next.config');
-const routes     = getAppExports(true).routes;
+const config            = require('../config');
+const nextConfig        = require('../next.config');
+const routes            = getAppExports(true).routes;
+const nextI18nextConfig = getAppExports(true).nextI18nextConfig;
 
 
 
@@ -175,7 +176,7 @@ class App {
     ];
 
     if (config.lang.enabled) {
-      requiredFilesPaths.push(paths.appLocales)
+      requiredFilesPaths.push(paths.appLocales);
     }
 
     if (!checkRequiredFiles(requiredFilesPaths)) {
@@ -251,6 +252,21 @@ class App {
           return;
         }
 
+        // If i18n is enabled we must resolve the locale manually
+        if (config.lang.enabled) {
+          let locale = req.params.locale;
+
+          if (!locale) {
+            locale = nextI18nextConfig.i18n.defaultLocale;
+          }
+
+          if (!nextI18nextConfig.i18n.locales.includes(locale)) {
+            return this.nextApp.render404(req, res);
+          }
+
+          queryParams.__nextLocale = locale;
+        }
+
         try {
           const html = await this.nextApp.renderToHTML(req, res, routeConfig.page, queryParams);
 
@@ -292,6 +308,12 @@ class App {
     Object.entries(this.routes).forEach(([routeName, routeConfig]) => {
       this._pushRouteListener(removeUrlLastSlash(routeName), routeConfig, routeName);
     });
+
+    if (config.lang.enabled) {
+      Object.entries(this.routes).forEach(([routeName, routeConfig]) => {
+        this._pushRouteListener(removeUrlLastSlash(`/:locale${routeName}`), routeConfig, routeName);
+      });
+    }
 
     if (process.env.NODE_ENV !== 'production') {
       console.log('\n');

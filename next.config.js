@@ -5,7 +5,7 @@ const withTM        = require('next-transpile-modules');
 //@remove-on-eject-end
 const withOffline   = require('next-offline');
 const getAppExports = require('./appExports');
-const { i18n }      = getAppExports(true).config.lang;
+const { i18n }      = getAppExports(true).nextI18nextConfig;
 
 const nextConfig = /*@add-on-eject-begin({@add-on-eject-end*/
   //@remove-on-eject-begin
