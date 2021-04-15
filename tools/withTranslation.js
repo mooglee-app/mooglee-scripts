@@ -1,4 +1,5 @@
-import React from 'react';
+import React                                   from 'react';
+import { withTranslation as _withTranslation } from '../lib/i18n';
 
 
 const withTranslation = (pageName = '', namespaces, config) => ComposedComponent => {
@@ -19,7 +20,7 @@ const withTranslation = (pageName = '', namespaces, config) => ComposedComponent
       );
     };
 
-    return withTranslation(_namespaces)(Extended);
+    return _withTranslation(_namespaces)(Extended);
   }
   return ComposedComponent;
 };
