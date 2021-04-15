@@ -2,9 +2,9 @@ import CssBaseline                from '@material-ui/core/CssBaseline';
 import Hidden                     from '@material-ui/core/Hidden';
 import { ThemeProvider }          from '@material-ui/styles';
 import config                     from '@mooglee/core/config';
-import { appWithTranslation }     from 'next-i18next';
 import createStore                from '@mooglee/core/store/createStore';
 import envBoolean                 from '@mooglee/core/tools/envBoolean';
+import { appWithTranslation }     from 'next-i18next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import withRedux                  from 'next-redux-wrapper';
 import App                        from 'next/app';
@@ -13,12 +13,10 @@ import NProgress                  from 'nprogress';
 import React                      from 'react';
 import { Provider }               from 'react-redux';
 import appExports                 from '../appExports';
-import getAppExports              from '../appExports';
 import { setAppLanguage }         from '../store/core.actions';
-import paths from '../lib/paths';
 
-const { lang: i18nConfig } = getAppExports(true).config;
-const { theme }            = appExports();
+
+const { theme, lang: i18nConfig } = appExports();
 
 
 export const getStaticProps = async ({ locale }) => ({
@@ -184,9 +182,6 @@ class _App extends App {
 
 export default withRedux(createStore)(
   config.lang.enabled
-    ? appWithTranslation(_App, {
-      ...i18nConfig,
-    localePath: paths.appLocales,
-    })
+    ? appWithTranslation(_App, i18nConfig)
     : _App,
 );

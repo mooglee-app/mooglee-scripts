@@ -6,7 +6,7 @@ const { i18n }      = getAppExports(true).config.lang;
 const withTM        = require('next-transpile-modules');
 //@remove-on-eject-end
 const withOffline   = require('next-offline');
-
+const paths = require('./lib/paths');
 const nextConfig = /*@add-on-eject-begin({@add-on-eject-end*/
   //@remove-on-eject-begin
   withTM(['@mooglee/core'])(
@@ -17,7 +17,10 @@ const nextConfig = /*@add-on-eject-begin({@add-on-eject-end*/
       generateInDevMode: true,
       useFileSystemPublicRoutes: false,
       workboxOpts,
-      i18n,
+      i18n: {
+        ...i18n,
+        localePath: paths.appLocales,
+      },
 
       webpack: (config, { dev, isServer, buildId, config: { distDir } }) => {
         return webpackConfig(config, { isServer, buildId, distDir, dev });
