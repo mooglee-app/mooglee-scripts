@@ -3,8 +3,6 @@ import withUIWidth                      from '@material-ui/core/withWidth';
 import { withRouter as withNextRouter } from 'next/router';
 import { connect }                      from 'react-redux';
 import { compose }                      from 'recompose';
-import config                           from '../config';
-import { withTranslation }              from '../lib/i18n';
 
 
 /**

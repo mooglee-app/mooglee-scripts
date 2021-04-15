@@ -25,20 +25,14 @@ class _App extends App {
   static async getInitialProps({ Component, ctx, customAppInitialPropsModifier }) {
     const props = {};
 
-    props.lang = !ctx.req ? i18n.language : ctx.req.language;
-
-    if (!props.lang) {
-      props.lang = config.lang.default;
-    }
-
-    ctx.store.dispatch(setAppLanguage(props.lang));
+    //ctx.store.dispatch(setAppLanguage(props.lang));
 
     if (typeof customAppInitialPropsModifier === 'function') {
       await customAppInitialPropsModifier(props, ctx);
     }
 
     props.pageProps = {
-      ...(Component.getInitialProps ? await Component.getInitialProps({ ...ctx, lang: props.lang }) : {}),
+      ...(Component.getInitialProps ? await Component.getInitialProps(ctx) : {}),
     };
 
     props.query = ctx.query || ctx.req.params;
