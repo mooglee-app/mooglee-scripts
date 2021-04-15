@@ -3,7 +3,6 @@ import React           from 'react';
 import { connect }     from 'react-redux';
 import { compose }     from 'recompose';
 import config          from '../config';
-import withTranslation from '../tools/withTranslation';
 
 
 /**
@@ -12,8 +11,6 @@ import withTranslation from '../tools/withTranslation';
  * - connect the component to i18next
  * - Add MUI styles
  * @param Component
- * @param {string} name: the slug name of the page
- * @param {array} namespaces: additional locales that can be injected to the page
  * @param {function} mapStateToProps: you know what it is
  * @param {object} styles: custom component styles
  * @param {boolean} withTheme: define if the prop 'theme' containing the app theme should be injected into the component
@@ -21,8 +18,6 @@ import withTranslation from '../tools/withTranslation';
  */
 
 const pageWrapper = (Component, {
-  name,
-  namespaces = [],
   mapStateToProps = null,
   styles = {},
   withTheme = false,
@@ -31,7 +26,6 @@ const pageWrapper = (Component, {
   const args = [
     connect(mapStateToProps),
     withStyles(styles, { withTheme: withTheme }),
-    withTranslation(name, namespaces, config),
   ];
 
   return compose(...args)(Component);

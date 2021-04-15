@@ -15,6 +15,8 @@ import appExports             from '../appExports';
 import { setAppLanguage }     from '../store/core.actions';
 
 
+const { nextI18nextConfig } = appExports(true);
+
 const { theme } = appExports();
 
 
@@ -174,6 +176,6 @@ class _App extends App {
 
 export default withRedux(createStore)(
   config.lang.enabled
-    ? appWithTranslation(_App)
+    ? appWithTranslation(_App, nextI18nextConfig)
     : _App,
 );

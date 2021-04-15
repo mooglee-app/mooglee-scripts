@@ -3,7 +3,6 @@ import Document, { Html, Head, Main, NextScript } from 'next/document';
 import React                                from 'react';
 import appExports                           from '../appExports';
 import config                               from '../config';
-import { i18n }                             from '../lib/i18n';
 
 
 const { theme } = appExports();
@@ -74,7 +73,6 @@ MyDocument.getInitialProps = async ctx => {
 
   return {
     ...initialProps,
-    lang: !ctx.req ? i18n.language : ctx.req.language,
     // Styles fragment is rendered after the app and page rendering finish.
     styles: [
       <React.Fragment key="styles">

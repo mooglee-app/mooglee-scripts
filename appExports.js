@@ -2,6 +2,7 @@ const cjsExports = {
   packageJson: require('../../../package'),
   routes: require('../../../routes'),
   config: require('../../../config'),
+  nextI18nextConfig: require('../../../next-i18next.config')
 };
 
 /**
