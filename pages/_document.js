@@ -20,7 +20,6 @@ class MyDocument extends Document {
         <meta name="format-detection" content="telephone=no"/>
         {/* PWA primary color */}
         <meta name="theme-color" content={theme.palette.primary.main}/>
-        <script src="/static/js/polyfills/js-object.js"/>
         <noscript>
           <style type="text/css">
             {` .hidden-no-script {display:none;} `}
