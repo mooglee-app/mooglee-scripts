@@ -1,6 +1,6 @@
 const { useTranslation: _useTranslation } = require('next-i18next');
 const { serverSideTranslations }          = require('next-i18next/serverSideTranslations');
-const getAppExports                       = require('./appExports');
+const getAppExports                       = require('../appExports');
 const { nextI18nextConfig }               = getAppExports(true);
 
 
