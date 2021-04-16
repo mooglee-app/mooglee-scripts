@@ -5,23 +5,31 @@ const withTM        = require('next-transpile-modules');
 //@remove-on-eject-end
 const withOffline   = require('next-offline');
 const getAppExports = require('./appExports');
-const { i18n }      = getAppExports(true).nextI18nextConfig;
+const { nextI18nextConfig, config }      = getAppExports(true);
+
+
+const settings = {
+  distDir: './build', // from client folder
+  dontAutoRegisterSw: true,
+  generateInDevMode: true,
+  useFileSystemPublicRoutes: false,
+  workboxOpts,
+
+  webpack: (config, { dev, isServer, buildId, config: { distDir } }) => {
+    return webpackConfig(config, { isServer, buildId, distDir, dev });
+  },
+};
+
+if (config.lang.enabled && nextI18nextConfig && nextI18nextConfig.i18n) {
+  settings.i18n = nextI18nextConfig.i18n;
+}
 
 const nextConfig = /*@add-on-eject-begin({@add-on-eject-end*/
   //@remove-on-eject-begin
   withTM(['@mooglee/core'])(
     {
       //@remove-on-eject-end
-      distDir: './build', // from client folder
-      dontAutoRegisterSw: true,
-      generateInDevMode: true,
-      useFileSystemPublicRoutes: false,
-      workboxOpts,
-      i18n,
-
-      webpack: (config, { dev, isServer, buildId, config: { distDir } }) => {
-        return webpackConfig(config, { isServer, buildId, distDir, dev });
-      },
+      ...settings,
     });
 
 // Fix a bug with transpile-modules

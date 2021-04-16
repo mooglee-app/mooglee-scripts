@@ -14,7 +14,7 @@ import { compose }            from 'recompose';
 import appExports             from '../appExports';
 
 
-const { nextI18nextConfig } = appExports(true);
+const { nextI18nextConfig, config } = appExports(true);
 
 const { theme } = appExports();
 
@@ -167,7 +167,11 @@ class _App extends App {
   }
 };
 
-const withTranslation = WrappedApp => appWithTranslation(WrappedApp, nextI18nextConfig);
+const withTranslation = WrappedApp => {
+  return config.lang.enabled
+    ? appWithTranslation(WrappedApp, nextI18nextConfig)
+    : WrappedApp;
+};
 
 
 export default compose(withTranslation, withRedux(createStore))(_App);

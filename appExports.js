@@ -2,8 +2,11 @@ const cjsExports = {
   packageJson: require('../../../package'),
   routes: require('../../../routes'),
   config: require('../../../config'),
-  nextI18nextConfig: require('../../../next-i18next.config')
 };
+
+if (cjsExports.config.lang && cjsExports.config.lang.enabled) {
+  cjsExports.nextI18nextConfig = require('../../../next-i18next.config');
+}
 
 /**
  * This is a list of modules imported from the main app and that can safely be
