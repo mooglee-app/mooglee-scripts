@@ -7,10 +7,10 @@ const { nextI18nextConfig }               = getAppExports(true);
 export const getI18nStaticProps = (
   namespaces      = [nextI18nextConfig.defaultNS],
   additionalProps = {},
-) => async ({ locale }) => ({
+) => async (ctx) => ({
   props: {
-    ...additionalProps,
-    ...await serverSideTranslations(locale, namespaces),
+    ...typeof additionalProps === 'function' ? additionalProps(ctx) : additionalProps,
+    ...await serverSideTranslations(ctx.locale, Array.isArray(namespaces) ? namespaces : [namespaces]),
   },
 });
 

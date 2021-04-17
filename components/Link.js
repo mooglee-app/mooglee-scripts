@@ -30,6 +30,7 @@ function Link({
                 color,
                 style,
                 query,
+                locale,
                 name,
                 to,
               }) {
@@ -113,11 +114,13 @@ function Link({
   return (
     <NextLink
       href={{
-        pathname: removeUrlLastSlash(page || to),
+        pathname,
         query,
       }}
       as={pathname + urlQuery}
       prefetch={prefetch}
+      locale={locale}
+      passHref
     >
       {NativeLinkComponent}
     </NextLink>
@@ -168,6 +171,8 @@ Link.propTypes = {
 
   // if true, the component will consider the link active whenever its first segment matches the current route
   checkSubActive: PropTypes.bool,
+
+  locale: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
 };
 
 Link.defaultProps = {
@@ -179,12 +184,12 @@ Link.defaultProps = {
   urlQuery: '',
   disabled: false,
   checkSubActive: false,
+  locale: false,
   style: {},
 };
 
 
 export default wrapper(Link, {
-  isTranslatable: false,
   hasStyles: false,
   withRouter: true,
 });
