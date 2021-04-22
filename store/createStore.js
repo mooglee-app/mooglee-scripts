@@ -7,7 +7,7 @@ import getAppExports                                                     from '.
 import config                                                            from '../config';
 import coreReducers                                                      from './core.reducers';
 
-// Items that be stored in the localStorage
+
 const { localStorageStates, customMiddleware = [], logger: userLogger = false } = config.redux;
 
 const { Socket, defaultStore, packageJson, reducers, routes } = getAppExports();
@@ -28,13 +28,13 @@ const logger   = (process.env.NODE_ENV === 'production' || !userLogger)
 
 // The socket will be used in thunk actions to simplify the connection
 // with an external API. You can learn more about how it works in the readme
-// or directly in the Class source file
+// or directly in the Socket's Class source file
 
 const socket = new Socket();
 
 // This is used by the server has a default state structure. This is very helpful while
-// it allow us to be sure that some default attributes while always be defined. It is also a
-// go place to inject other data, settings, etc
+// it allows us to be sure that some default attributes will always be defined. It is also a
+// good place to inject other data, settings, etc
 
 const DEFAULT_STATE = {
   core: {
@@ -46,18 +46,29 @@ const DEFAULT_STATE = {
 };
 
 
-function createStore(initialState = DEFAULT_STATE) {
+function createStore(initialState) {
 
   // We do not want middlewares like redux-logger to get
-  // fired on the server side
+  // triggered on the server side
 
   if (isServer) {
-    return _createStore(combinedReducers, initialState, applyMiddleware(thunk.withExtraArgument(socket)));
+    return _createStore(combinedReducers,
+      initialState || DEFAULT_STATE,
+      applyMiddleware(thunk.withExtraArgument(socket)));
   } else {
-    initialState = deepmerge(
-      initialState,
-      load({ states: localStorageStates, namespace: packageJson.name }),
-    );
+    const localState = load({ states: localStorageStates, namespace: packageJson.name });
+
+    // We want to load the initialState or the DEFAULT_STATE in a different order depending on the situation
+    initialState = typeof initialState === 'object'
+      ? deepmerge(
+        localState,
+        initialState,
+      )
+      : deepmerge(
+        DEFAULT_STATE,
+        localState,
+      );
+
     return _createStore(
       combinedReducers,
       initialState,
