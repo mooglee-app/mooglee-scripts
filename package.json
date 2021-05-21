@@ -1,12 +1,12 @@
 {
   "name": "@mooglee/core",
-  "version": "1.3.1",
+  "version": "1.3.2",
   "description": "",
   "main": "/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "bump": "bump --commit --push --all ",
-    "publish": "npm run bump && publish --scope=@mooglee",
+    "publish": "npm run bump && npm publish --scope=@mooglee",
     "prebuild": "rimraf build"
   },
   "author": "",
