@@ -10,7 +10,7 @@ import coreReducers                                                      from '.
 
 const { localStorageStates, customMiddleware = [], logger: userLogger = false } = config.redux;
 
-const { Socket, defaultStore, packageJson, reducers, routes } = getAppExports();
+const { Socket, defaultStore, packageJson, reducers } = getAppExports();
 
 
 const combinedReducers = combineReducers({
@@ -39,7 +39,6 @@ const socket = new Socket();
 const DEFAULT_STATE = {
   core: {
     lang: config.lang.default,
-    routes,
     pages: {},
   },
   ...defaultStore,
