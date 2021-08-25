@@ -13,6 +13,7 @@ function getErrorStatus(error = {}) {
   return statusCode;
 }
 
+
 const lazyGetPageData = (pageName, dispatch) => new Promise((resolve, reject) => {
   dispatch(fetchPage(pageName, false, (res, err) => {
     if (res && !err) return resolve(res);
@@ -27,35 +28,38 @@ const lazyGetPageData = (pageName, dispatch) => new Promise((resolve, reject) =>
 // an retrieve specific data for the page. these data will be accessible under the page prop 'pageData'
 
 
-export default (pageName = '', opts = {}) => ComposedComponent => {
+export default function withPageData(pageName = '', opts = {}) {
+  return ComposedComponent => {
 
-  const required = Boolean(opts.required);
+    const required = Boolean(opts.required);
 
-  const Extended = (props) => React.createElement(ComposedComponent, props);
+    const Extended = (props) => React.createElement(ComposedComponent, props);
 
-  Extended.getInitialProps = async (props = {}) => {
+    Extended.getInitialProps = async (props = {}) => {
 
-    // Resolve page data
-    let pageData = {};
+      // Resolve page data
+      let pageData = {};
 
-    const currentStore = props.store.getState() || {};
-    if (currentStore.core && currentStore.core.pages && currentStore.core.pages[pageName]) {
-      pageData = currentStore.core.pages[pageName];
-    } else if (required) {
-      try {
-        pageData = await lazyGetPageData(pageName, props.store.dispatch);
-      } catch (err) {
-        pageData = { error: { code: getErrorStatus(err) || 404 } }; // Store the status of the error somewhere
+      const currentStore = props.store.getState() || {};
+      if (currentStore.core && currentStore.core.pages && currentStore.core.pages[pageName]) {
+        pageData = currentStore.core.pages[pageName];
+      } else if (required) {
+        try {
+          pageData = await lazyGetPageData(pageName, props.store.dispatch);
+        } catch (err) {
+          pageData = { error: { code: getErrorStatus(err) || 404 } }; // Store the status of the error somewhere
+        }
       }
-    }
 
-    // Run page getInitialProps with store and isServer
-    const initialProps = ComposedComponent.getInitialProps
-      ? await ComposedComponent.getInitialProps(Object.assign({}, props, { pageData }))
-      : {};
+      // Run page getInitialProps with store and isServer
+      const initialProps = ComposedComponent.getInitialProps
+        ? await ComposedComponent.getInitialProps(Object.assign({}, props, { pageData }))
+        : {};
 
-    return Object.assign({}, initialProps, { pageData, pageName });
+      return Object.assign({}, initialProps, { pageData, pageName });
+    };
+
+    return Extended;
   };
 
-  return Extended;
-};
+}

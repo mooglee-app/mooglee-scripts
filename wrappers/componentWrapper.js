@@ -24,7 +24,7 @@ import { withTranslation }              from '../lib/i18n';
  * @param {array} namespaces: custom namespaces that can be added to i18next
  * @returns {*}
  */
-export default (Component, {
+export default function componentWrapper(Component, {
   mapStateToProps = null,
   styles = {},
   isTranslatable = false,
@@ -34,7 +34,7 @@ export default (Component, {
   withWidth = false,
   withRouter = false,
   namespaces = [],
-} = {}) => {
+} = {}) {
   const args = [
     ...((isConnected || typeof mapStateToProps === 'function') ? [connect(mapStateToProps)] : []),
     ...((hasStyles || typeof styles === 'object') ? [withStyles(styles, { withTheme: withTheme })] : []),

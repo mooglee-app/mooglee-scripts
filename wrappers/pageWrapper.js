@@ -23,14 +23,14 @@ import withTranslation     from '../tools/withTranslation';
  * @returns {*}
  */
 
-export default (Component, {
+export default function pageWrapper(Component, {
   name,
   namespaces = [],
   mapStateToProps = null,
   styles = {},
   withTheme = false,
   noPageData = false,
-} = {}) => {
+} = {})  {
 
   const args = [
     withPageData(name, { required: config.api.fetchPagesData ? !noPageData : false }),

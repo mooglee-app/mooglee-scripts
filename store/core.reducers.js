@@ -10,9 +10,11 @@ function pushPage(state, action) {
   };
 }
 
+
 function setAppLanguage(state, action) {
   return { ...state, lang: action.lang };
 }
+
 
 function setAppSettings(state, action) {
   return {
@@ -22,7 +24,8 @@ function setAppSettings(state, action) {
   };
 }
 
-export default (state = {}, action = {}) => {
+
+export default function coreReducers(state = {}, action = {}) {
   switch (action.type) {
 
     case actionTypes.CORE_PUSH_PAGE:
