@@ -1,4 +1,3 @@
-const withSass      = require('@zeit/next-sass');
 const webpackConfig = require('./config/webpack.config');
 const workboxOpts   = require('./config/serviceWorker.config')
 //@remove-on-eject-begin
@@ -15,7 +14,7 @@ const regexEqual    = (x, y) => {
     x.multiline === y.multiline
   );
 };
-const nextConfig = withSass(/*@add-on-eject-begin({@add-on-eject-end*/
+const nextConfig = /*@add-on-eject-begin({@add-on-eject-end*/
   //@remove-on-eject-begin
   withTM(['@mooglee/core'])(
     {
@@ -34,7 +33,7 @@ const nextConfig = withSass(/*@add-on-eject-begin({@add-on-eject-end*/
       webpack: (config, { dev, isServer, buildId, config: { distDir } }) => {
         return webpackConfig(config, { isServer, buildId, distDir, dev });
       },
-    }));
+    })
 
 // Fix a bug with transpile-modules
 if (typeof nextConfig.webpack === 'function') {
