@@ -41,11 +41,6 @@ module.exports = (nextWebpackConfig, { isServer, buildId, distDir, dev }) => {
 
   return Object.assign({}, nextWebpackConfig, {
     devServer: { quiet: true, noInfo: true, stats: 'errors-only' },
-    module: {
-      rules: [
-        ...nextWebpackConfig.module.rules,
-      ],
-    },
     plugins: [
       ...nextWebpackConfig.plugins,
       new webpack.DefinePlugin(env.stringified),
